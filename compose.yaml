@@ -1,0 +1,67 @@
+services:
+  odoo:
+    build: .
+    container_name: odoo
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8070:8069"
+    environment:
+      HOST: postgres
+      USER: ${POSTGRES_USER:-app}
+      PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
+    env_file:
+      - .env
+    networks:
+      - odoo
+    volumes:
+      - ./odoo.conf:/etc/odoo/odoo.conf
+      - ./addons:/mnt/extra-addons
+      - odoo-data:/var/lib/odoo
+    command: --dev=all
+
+  pgadmin_odoo:
+    container_name: pg
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "8008:80"
+    networks:
+      - odoo
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+  postgres:
+    container_name: postgres
+    image: postgres:${POSTGRES_VERSION:-16}-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-app} -d ${POSTGRES_DB:-app}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - postgres_vol:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - odoo
+
+networks:
+  odoo:
+
+volumes:
+  postgres_vol:
+  pgadmin_data:
+  odoo-data:
