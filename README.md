@@ -27,7 +27,7 @@ Avant de lancer le projet, assurez-vous d'avoir :
 ## 📁 Structure du Projet
 
 ```text
-📂 mon-projet-odoo19/
+📂 formation-odoo/
 ├── 📂 addons/             # Vos modules Odoo 19 personnalisés
 ├── 📄 docker-compose.yml  # Orchestration des services
 └── 📄 README.md           # Documentation
@@ -41,11 +41,11 @@ Avant de lancer le projet, assurez-vous d'avoir :
 
 ```bash
 # Cloner le dépôt
-git clone https://github.com/votre-repo/mon-projet-odoo19.git
-cd mon-projet-odoo19
+git clone https://github.com/pollajoel/formation-odoo.git
+cd formation-odoo
 
 # Ou créer manuellement
-mkdir mon-projet-odoo19 && cd mon-projet-odoo19
+mkdir formation-odoo && cd formation-odoo
 mkdir -p addons
 ```
 
