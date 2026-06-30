@@ -1,0 +1,50 @@
+<odoo>
+
+    <record id="view_res_partner_form" model="ir.ui.view">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+
+        <field name="arch" type="xml">
+
+            <!-- hide fields-->
+            <xpath expr="//field[@name='company_type']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='vat']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='website']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='parent_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='function']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            
+             <!-- hide fields-->
+
+            <xpath expr="//notebook" position="replace">
+                <notebook>
+                 <page string="Informations complémentaires">
+                    <group>
+                        <field name="level" string="Niveau" invisible="not context.get('default_is_trainee')"/>
+                        <field name="organization" string="Organisation" invisible="not context.get('default_is_trainee')"/>
+                    </group>
+                     <group>
+                        <field name="available" string="Disponibilité" invisible="context.get('default_is_trainee')"/>
+                     </group>
+                 </page>
+                </notebook>
+             </xpath>
+        </field>
+    </record>
+</odoo>

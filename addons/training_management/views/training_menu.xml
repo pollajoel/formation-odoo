@@ -1,0 +1,39 @@
+<odoo>
+
+    <record id="action_training_management_trainer" model="ir.actions.act_window">
+        <field name="name">Formateur</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="context"> {'default_is_trainee': False}</field>
+        <field name="domain">[('is_trainee', '=', False)]</field>
+    </record>
+
+    <record id="action_training_management_learner" model="ir.actions.act_window">
+        <field name="name">Apprenant</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="context"> {'default_is_trainee': True}</field>
+        <field name="domain">[('is_trainee', '=', True)]</field>
+    </record>
+
+    <menuitem id="training_menu_root"
+              name="Training Mangement"
+              sequence="10"/>
+
+    <menuitem id="trainer"
+              name="Formateur"
+              parent="training_menu_root"
+              action="action_training_management_trainer"
+              sequence="10"/>
+    
+    <menuitem id="learner"
+              name="Apprenant"
+              parent="training_menu_root"
+              action="action_training_management_learner"
+              sequence="10"/>
+
+
+
+
+
+</odoo>
