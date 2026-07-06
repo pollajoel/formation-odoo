@@ -5,29 +5,54 @@
         <field name="arch" type="xml">
             <form string="Sessions">
                 <header>
-                        <button  string="Confirmed" class="oe_highlight" type="object" name="action_confirm"/>
-                        <button  string="Done" class="oe_highlight" type="object" name="action_done"/>
-                        <button  string="Cancel" class="oe_highlight" type="object" name="action_cancel" />
+                        <button  string="Confirmed" class="oe_highlight" type="object" name="action_confirm" invisible="state !='draft'"/>
+                        <button  string="Done" class="oe_highlight" type="object" name="action_done" invisible="state !='confirmed'"/>
+                        <button  string="Cancel" class="oe_highlight" type="object" name="action_cancel"  invisible="state == 'cancel'"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done,cancel"/>
                 </header>
         
                 <sheet>
 
                     <group>
-                        <field name="name"/>
-                        <field name="formation_id"/>
-                        <field name="trainer_id"/>
-                        <field name="trainee_ids"/>
-                        <field name="notes"/>
+                        <field name="name" readonly="state!='draft'"/>
+                        <field name="formation_id" readonly="state!='draft'"/>
+                        <field name="trainer_id" readonly="state!='draft'"/>
+                        <field name="trainee_ids" readonly="state!='draft'"/>
+                        <field name="notes" readonly="state!='draft'"/>
                     </group>
                     <group>
                         <field name="start_date"/>
                         <field name="end_date"/>
-                        <field name="capacity"/>
-                        <field name="location"/>
+                        <field name="capacity" readonly="state!='draft'"/>
+                        <field name="location" readonly="state!='draft'"/>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
+
+    <record id="view_training_session_calendar"  model="ir.ui.view">
+        <field name="name">training.session.calendar</field>
+        <field name="model">training.session</field>
+        <field name="arch" type="xml">
+            <calendar string="Traning sessions"
+                date_start="start_date"
+                date_stop="end_date"
+                color="trainer_id"
+            >
+                <field name="name"/>
+                <field name="trainer_id"/>
+            </calendar>
+        </field>
+    </record>
+
+
+
+
+
+
+
+
+
+
 </odoo>
