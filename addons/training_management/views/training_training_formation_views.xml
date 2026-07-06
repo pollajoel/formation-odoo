@@ -1,0 +1,19 @@
+<odoo>
+    <record id="view_training_training_formation_form"  model="ir.ui.view">
+        <field name="name">training.training.formation</field>
+        <field name="model">training.formation</field>
+        <field name="arch" type="xml">
+            <form string="Formations">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="duration"/>
+                        <field name="active"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,5 +1,6 @@
 services:
   odoo:
+    container_name: odoo
     build: .
     depends_on:
       postgres:

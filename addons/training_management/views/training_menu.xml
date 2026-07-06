@@ -52,6 +52,18 @@
         <field name="search_view_id" ref="view_training_trainer_search_form"/>
     </record>
 
+    <record id="action_training_training_formation" model="ir.actions.act_window">
+        <field name="name">Formations</field>
+        <field name="res_model">training.formation</field>
+        <field name="view_mode">list,form</field>
+     </record>
+
+     <record id="action_training_session" model="ir.actions.act_window">
+        <field name="name">Session de formation</field>
+        <field name="res_model">training.session</field>
+        <field name="view_mode">list,form</field>
+     </record>
+
 
     <!-- Menus -->
     <menuitem id="training_menu_root"
@@ -63,9 +75,22 @@
               parent="training_menu_root"
               action="action_training_trainee"
               sequence="10"/>
+
     <menuitem id="trainer"
               name="Formateur"
               parent="training_menu_root"
               action="action_training_trainer"
+              sequence="20"/>
+        
+    <menuitem id="training_training"
+              name="Formation"
+              parent="training_menu_root"
+              action="action_training_training_formation"
+              sequence="20"/>
+
+    <menuitem id="training_session"
+              name="Session"
+              parent="training_menu_root"
+              action="action_training_session"
               sequence="20"/>
 </odoo>
