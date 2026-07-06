@@ -1,39 +1,71 @@
 <odoo>
+    <!-- Vue de recherche -->
+        <record id="view_training_trainee_search_form" model="ir.ui.view">
+                <field name="name">training.trainee.search</field>
+                <field name="model">training.trainee</field>
+                <field name="arch" type="xml">
+                <search>
+                        <filter string="Niveau Débutant" name="filter_beginner"
+                                domain="[('level', '=', 'beginner')]"/>
+                        <filter string="Niveau Intermédiaire" name="filter_intermediate"
+                                domain="[('level', '=', 'intermediate')]"/>
+                        <filter string="Niveau Avancé" name="filter_advanced"
+                                domain="[('level', '=', 'advanced')]"/>
+                        <separator/>
+                        <filter string="Niveau" name="group_by_level"
+                                context="{'group_by': 'level'}"/>
+                        <filter string="Organisation" name="group_by_org"
+                                context="{'group_by': 'organization'}"/>
+                </search>
+                </field>
+        </record>
 
-    <record id="action_training_management_trainer" model="ir.actions.act_window">
-        <field name="name">Formateur</field>
-        <field name="res_model">res.partner</field>
-        <field name="view_mode">list,form</field>
-        <field name="context"> {'default_is_trainee': False}</field>
-        <field name="domain">[('is_trainee', '=', False)]</field>
-    </record>
+        <record id="view_training_trainer_search_form" model="ir.ui.view">
+                <field name="name">training.trainer.search</field>
+                <field name="model">training.trainer</field>
+                <field name="arch" type="xml">
+                        <search>
+                        <field name="partner_id"/>
+                        <field name="speciality"/>
+                        <field name="available"/>
 
-    <record id="action_training_management_learner" model="ir.actions.act_window">
+                        <filter string="Disponible"
+                                name="available"
+                                domain="[('available', '=', True)]"/>
+                        </search>
+                </field>
+        </record>
+
+    <!-- Action -->
+    <record id="action_training_trainee" model="ir.actions.act_window">
         <field name="name">Apprenant</field>
-        <field name="res_model">res.partner</field>
-        <field name="view_mode">list,form</field>
-        <field name="context"> {'default_is_trainee': True}</field>
-        <field name="domain">[('is_trainee', '=', True)]</field>
+        <field name="res_model">training.trainee</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="view_training_trainee_search_form"/>
     </record>
 
+
+    <record id="action_training_trainer" model="ir.actions.act_window">
+        <field name="name">Formateur</field>
+        <field name="res_model">training.trainer</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_training_trainer_search_form"/>
+    </record>
+
+
+    <!-- Menus -->
     <menuitem id="training_menu_root"
-              name="Training Mangement"
+              name="Training Management"
               sequence="10"/>
 
+    <menuitem id="trainee"
+              name="Apprenant"
+              parent="training_menu_root"
+              action="action_training_trainee"
+              sequence="10"/>
     <menuitem id="trainer"
               name="Formateur"
               parent="training_menu_root"
-              action="action_training_management_trainer"
-              sequence="10"/>
-    
-    <menuitem id="learner"
-              name="Apprenant"
-              parent="training_menu_root"
-              action="action_training_management_learner"
-              sequence="10"/>
-
-
-
-
-
+              action="action_training_trainer"
+              sequence="20"/>
 </odoo>

@@ -1,0 +1,96 @@
+<odoo>
+    <record id="view_training_trainee_form" model="ir.ui.view">
+        <field name="name">training.trainee.form</field>
+        <field name="model">training.trainee</field>
+        <field name="arch" type="xml">
+            <form string="Formateur">
+                <sheet>
+                    <field name="image_1920" widget="image" class="oe_avatar"/>
+                    <group>
+                        <group string="Informations personnelles">
+                            <field name="name" string="Nom" required="1"/>
+                            <field name="email" string="Email"/>
+                            <field name="phone" string="Téléphone"/>
+                        </group>
+                        <group string="Informations formation">
+                            <field name="level" string="Niveau"/>
+                            <field name="organization" string="Organisation"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_training_trainee_list" model="ir.ui.view">
+            <field name="name">training.trainee.list</field>
+            <field name="model">training.trainee</field>
+            <field name="arch" type="xml">
+                <list string="Apprenants">
+                    <field name="name"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                    <field name="level"/>
+                    <field name="organization"/>
+                </list>
+            </field>
+        </record>
+<record id="view_training_trainee_kanban" model="ir.ui.view">
+    <field name="name">training.trainee.kanban</field>
+    <field name="model">training.trainee</field>
+    <field name="arch" type="xml">
+        <kanban>
+            <field name="id"/>
+            <field name="active"/>
+            <field name="name"/>
+            <field name="email"/>
+            <field name="phone"/>
+            <field name="level"/>
+            <field name="organization"/>
+            <field name="image_1920"/>
+
+            <templates>
+                <t t-name="card" class="flex-row">
+                    <widget name="web_ribbon"
+                            title="Archived"
+                            bg_color="text-bg-danger"
+                            invisible="active"/>
+
+                    <aside class="o_kanban_aside_full">
+                        <field name="image_1920"
+                               alt="Image"
+                               class="w-100 h-auto m-0"
+                               widget="image"
+                               options="{'img_class': 'object-fit-contain w-100 h-100'}"/>
+                    </aside>
+
+                    <main class="ps-2">
+                        <div class="mb-1">
+                            <field name="name" class="mb-0 fw-bold fs-5"/>
+                        </div>
+
+                        <div t-if="record.email.raw_value" class="text-truncate">
+                            <i class="fa fa-fw me-1 fa-envelope text-primary" title="Email"/>
+                            <field name="email"/>
+                        </div>
+
+                        <div t-if="record.phone.raw_value">
+                            <i class="fa fa-fw me-1 fa-phone text-primary" title="Phone"/>
+                            <field name="phone"/>
+                        </div>
+
+                        <div t-if="record.level.raw_value">
+                            <i class="fa fa-fw me-1 fa-graduation-cap text-primary" title="Niveau"/>
+                            <field name="level"/>
+                        </div>
+
+                        <div t-if="record.organization.raw_value">
+                            <i class="fa fa-fw me-1 fa-building text-primary" title="Organisation"/>
+                            <field name="organization"/>
+                        </div>
+                    </main>
+                </t>
+            </templates>
+        </kanban>
+    </field>
+</record>
+</odoo>

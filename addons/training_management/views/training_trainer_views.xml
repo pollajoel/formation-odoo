@@ -1,0 +1,38 @@
+<odoo>
+    <record id="view_training_trainer_form" model="ir.ui.view">
+        <field name="name">training.trainer.form</field>
+        <field name="model">training.trainer</field>
+        <field name="arch" type="xml">
+            <form string="Formateur">
+                <sheet>
+                    <field name="image_1920" widget="image" class="oe_avatar"/>
+                    <group>
+                        <group string="Informations personnelles">
+                            <field name="name" string="Nom" required="1"/>
+                            <field name="email" string="Email"/>
+                            <field name="phone" string="Téléphone"/>
+                        </group>
+                        <group string="Informations formation">
+                            <field name="speciality" string="Spécialité"/>
+                            <field name="available" string="Disponibilité"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+        <record id="view_training_trainer_list" model="ir.ui.view">
+            <field name="name">training.trainer.list</field>
+            <field name="model">training.trainer</field>
+            <field name="arch" type="xml">
+                <list string="Formateurs">
+                    <field name="name"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                    <field name="speciality"/>
+                    <field name="available"/>
+                </list>
+            </field>
+        </record>
+</odoo>

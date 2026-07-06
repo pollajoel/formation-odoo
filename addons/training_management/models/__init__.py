@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
-
-from . import Respartner
+from . import Trainee
+from . import Trainer
