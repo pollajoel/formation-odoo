@@ -11,6 +11,7 @@
                         <field name="duration"/>
                         <field name="active"/>
                         <field name="description"/>
+                        <field name="list_price"/>
                     </group>
                 </sheet>
             </form>

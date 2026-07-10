@@ -1,0 +1,27 @@
+<odoo>
+
+   <!-- action pour rajouter un participant -->
+    <record id="action_add_training_trainee_wizard" model="ir.actions.act_window">
+        <field name="name">Ajouter des participants</field>
+        <field name="res_model">session.trainee.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <!-- formulaire associé à l'action -->
+    <record id="add_training_trainee_form_wizard" model="ir.ui.view">
+        <field name="name">training.add.trainee.session.form</field>
+        <field name="model">session.trainee.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Ajouter des participants">
+                <group>
+                    <field name="participant_id"  widget="many2many_tags"/>
+                </group>
+                <footer>
+                    <button  string="Confirmed" class="btn-primary" type="object" name="action_add_trainee"/>
+                    <button  string="Cancel" class="oe_highlight" type="object" name="action_cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -5,32 +5,100 @@
         <field name="arch" type="xml">
             <form string="Sessions">
                 <header>
-                        <button  string="Confirmed" class="oe_highlight" type="object" name="action_confirm" invisible="state !='draft'"/>
-                        <button  string="Done" class="oe_highlight" type="object" name="action_done" invisible="state !='confirmed'"/>
-                        <button  string="Cancel" class="oe_highlight" type="object" name="action_cancel"  invisible="state == 'cancel'"/>
-                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done,cancel"/>
+                    
+                    <button  string="Confirmed" class="oe_highlight" type="object" name="action_confirm" invisible="state !='draft'"/>
+                    <button  string="Done"      class="oe_highlight" type="object" name="action_done" invisible="state !='confirmed'"/>
+                    <button  string="Cancel"    class="oe_highlight" type="object" name="action_cancel"  invisible="state == 'cancel'"/>
+                    <button  string="Ajouter un participant" class="oe_highlight" type="object" name="open_add_trainee_wizard" invisible="state != 'draft'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done,cancel"/>
                 </header>
-        
                 <sheet>
 
+                <!-- smart button-->
+                 <div class="oe_button_box" name="button_box">
+                      <button
+                           type="object"
+                           class="oe_stat_button"
+                           action="action_training_training_formation"
+                           icon="fa-users">
+                           <field name="total_trainee" widget="statinfo" string="Participants"/>
+                       </button>
+                        <button
+                           type="object"
+                           class="oe_stat_button"
+                           action="action_training_training_formation"
+                           icon="fa-calendar">
+                           <field name="total_trainee" widget="statinfo" string="Sessions"/>
+                       </button>
+                        <button
+                           type="object"
+                           class="oe_stat_button"
+                           action="action_training_training_formation"
+                           icon="fa-graduation-cap">
+                           <field name="total_trainee" widget="statinfo" string="Formateurs"/>
+                       </button>
+                        <button
+                           type="object"
+                           class="oe_stat_button"
+                           action="action_training_training_formation"
+                           icon="fa-check-square">
+                           <field name="total_trainee" widget="statinfo" string="Présences"/>
+                       </button>
+                        <button
+                           type="object"
+                           class="oe_stat_button"
+                           action="action_training_training_formation"
+                           icon="fa-bar-chart">
+                           <field name="total_trainee" widget="statinfo" string="Statistiques"/>
+                       </button>
+                        <button
+                           type="object"
+                           class="oe_stat_button"
+                           action="action_training_training_formation"
+                           icon="fa-certificate">
+                           <field name="total_trainee" widget="statinfo" string="Certificats"/>
+                       </button>
+                </div>
+
                     <group>
-                        <field name="name" readonly="state!='draft'"/>
+                        <field name="name"         readonly="state!='draft'"/>
                         <field name="formation_id" readonly="state!='draft'"/>
-                        <field name="trainer_id" readonly="state!='draft'"/>
-                        <field name="trainee_ids" readonly="state!='draft'"/>
-                        <field name="notes" readonly="state!='draft'"/>
+                        <field name="trainer_id"   readonly="state!='draft'"/>
                     </group>
-                    <group>
-                        <field name="start_date"/>
-                        <field name="end_date"/>
-                        <field name="capacity" readonly="state!='draft'"/>
-                        <field name="location" readonly="state!='draft'"/>
-                    </group>
+                    <notebook>
+                        <page string="Informations générales" name="infos_g">
+                            <group>
+                                <field name="start_date" readonly="state!='draft'"/>
+                                <field name="end_date"   readonly="state!='draft'"/>
+                                <field name="capacity"   readonly="state!='draft'"/>
+                                <field name="location"   readonly="state!='draft'"/>
+                            </group>
+                        </page>
+                        <page string="Participants" name="trainee_session">
+                             <group>
+                                <field name="trainee_ids" readonly="1"/>
+                             </group>
+                        </page>
+                        <page string="informations complémentaires" name="infos_c">  
+                             <group>         
+                                <field name="notes"  readonly="state!='draft'"/>
+                             </group>
+                        </page>
+                        <page string="Facturation" name="facturation_session">
+                        </page>
+                        <page string="statistiques" name="stat_session">
+                            <group>   
+                               <field name="total_trainee" string="Nombre de participant"/>
+                            </group>   
+                        </page>
+                    </notebook>
                 </sheet>
+                 <chatter/>
             </form>
         </field>
     </record>
 
+    <!-- vue calendrier-->
     <record id="view_training_session_calendar"  model="ir.ui.view">
         <field name="name">training.session.calendar</field>
         <field name="model">training.session</field>
@@ -46,11 +114,47 @@
         </field>
     </record>
 
+   
+    <record id="view_training_session_list"  model="ir.ui.view">
+        <field name="name">training.session.list</field>
+        <field name="model">training.session</field>
+        <field name="arch" type="xml">
+            <!-- editable="bottom" multi_edit="1" edition  multiligne en ligne -->
+            <list>
+                <field name="formation_id" optional="hide" readonly="state!='draft'"/>
+                <field name="name" optional="show" readonly="state!='draft'" widget="handle"/>
+                <field name="start_date" optional="show" readonly="state!='draft'"/>
+                <field name="end_date" optional="show" readonly="state!='draft'"/>
+                <field name="trainer_id" optional="show" readonly="state!='draft'"/>
+                 <field name="capacity" optional="hide" readonly="state!='draft'"/>
+                 <field name="create_uid" optional="hide"/>
+                <field 
+                    name="state" 
+                    widget="badge"
+                    decoration-info="state == 'draft'"
+                    decoration-warning="state =='confirmed'"
+                    decoration-success="state =='done'"
+                    decoration-danger="state =='cancel'"
+                    optional="show"
+                />
+            </list>
+        </field>
+    </record>
+   
 
 
 
-
-
+<record id="view_training_session_graph_course" model="ir.ui.view">
+    <field name="name">training.session.graph.course</field>
+    <field name="model">training.session</field>
+    <field name="arch" type="xml">
+        <graph string="Sessions par formation" type="bar">
+            <field name="formation_id" type="row"/>
+            <field name="total_trainee"/>
+            <field name="id" type="measure"/>
+        </graph>
+    </field>
+</record>
 
 
 
