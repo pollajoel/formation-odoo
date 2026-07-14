@@ -4,6 +4,7 @@
         <field name="model">training.session</field>
         <field name="arch" type="xml">
             <form string="Sessions">
+                <!-- workflow -->
                 <header>
                     
                     <button  string="Confirmed" class="oe_highlight" type="object" name="action_confirm" invisible="state !='draft'"/>
@@ -76,7 +77,18 @@
                         </page>
                         <page string="Participants" name="trainee_session">
                              <group>
-                                <field name="trainee_ids" readonly="1"/>
+                                <field name="registration_ids" readonly="1">
+                                    <list>
+                                        <field name="trainee_id"/>
+                                        <field name="state" widget="badge"
+                                            decoration-info="state == 'draft'"
+                                            decoration-warning="state =='confirmed'"
+                                            decoration-success="state =='done'"
+                                            decoration-danger="state =='cancel'"
+                                        />
+                                        <button name="action_confirm" type="object" icon="fa-shopping-cart" title="ouvrir le dévis"/>
+                                    </list>
+                                </field>
                              </group>
                         </page>
                         <page string="informations complémentaires" name="infos_c">  

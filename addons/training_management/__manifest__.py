@@ -22,6 +22,7 @@
         'views/training_trainer_views.xml',
         'views/training_training_formation_views.xml',
         'views/training_session_views.xml',
+        'views/training_registration_views.xml',
         'views/wizards/add_trainee_wizard_view.xml',
         'security/ir.model.access.csv']
 }

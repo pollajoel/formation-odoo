@@ -12,15 +12,15 @@ class TrainingFormation(models.Model):
     duration = fields.Float(string="Duration (Hours)")
     price    = fields.Float()
     active   = fields.Boolean(default=True)
-    # def create(self, vals):
-    #     # créer une nouvelle formation
-    #     training = super().create(vals)
-    #     product = self.env["product.product"].create({
-    #         "name": training.name,
-    #         "list_price": training.price,
-    #         "type": "service"
-    #     })
-    #     # associer le produit à la formation
-    #     training.product_id = product
-    #     # retourner la formation courante
-    #     return training
+    def create(self, vals):
+        # créer une nouvelle formation
+        product = self.env["product.template"].create({
+            "name": vals.get("name"),
+            "list_price": vals.get("list_price", 0.0),
+            "type": "service",
+            "invoice_policy": "order" # order et delivery => odoo attends que le service soit marqué comme réalisé ( pour générer un facture)
+        })
+        # associer le produit à la formation
+        vals["product_id"] = product.id
+        # retourner la formation courante
+        return super().create(vals)

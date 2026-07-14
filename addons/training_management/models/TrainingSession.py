@@ -17,7 +17,7 @@ class TrainingSession(models.Model):
         tracking=True
     )
     trainer_id= fields.Many2one("training.trainer", string="Trainer", tracking=True)
-    trainee_ids = fields.Many2many("training.trainee", string="participants", tracking=True)
+    registration_ids = fields.One2many("training.registration", "session_id", string="participants", tracking=True)
     start_date = fields.Date(required=True, tracking=True)
     end_date  = fields.Date(required=True, tracking=True)
     capacity  = fields.Integer(default=0, tracking=True)
@@ -41,6 +41,7 @@ class TrainingSession(models.Model):
     
     def action_open_trainee_view(self):
         return
+        
     def action_confirm(self):
         self.write({"state":"confirmed"})
 
@@ -60,13 +61,13 @@ class TrainingSession(models.Model):
             "target"   : "new",
             "context"  : {
                 "active_id": self.id, 
-                "excluded_trainee_id": self.trainee_ids.ids
+                "excluded_trainee_id": self.registration_ids.mapped("trainee_id")
             },
         }
-    @api.depends("trainee_ids")
+    @api.depends("registration_ids")
     def _compute_stats(self):
         for trainingSession in self:
-            trainingSession.total_trainee = len(trainingSession.trainee_ids)
+            trainingSession.total_trainee = len(trainingSession.registration_ids)
     
     @api.constrains('start_date', 'end_date')
     def _check_dates(self):
@@ -77,7 +78,7 @@ class TrainingSession(models.Model):
     @api.constrains('capacity')
     def _check_capacity_linit(self):
         for trainingSession in self:
-            if( trainingSession.capacity < len(trainingSession.trainee_ids)):
+            if( trainingSession.capacity < len(trainingSession.registration_ids)):
                 raise ValidationError("Le nombre participant dépasse la capacité de la session")
             if( trainingSession.capacity <= 0 ):
                 raise ValidationError("La capacité doit être supérieur à 0")

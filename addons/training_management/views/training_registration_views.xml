@@ -1,0 +1,57 @@
+<odoo>
+    <record id="view_registration_form"  model="ir.ui.view">
+        <field name="name">training.registration.formation</field>
+        <field name="model">training.registration</field>
+        <field name="arch" type="xml">
+            <form string="Inscription">
+                    <header>
+                    <button 
+                        name="action_validate_registration"
+                        type="object"
+                        string="Valider l'enregistrement"
+                        class="btn-primary"
+                        invisible="state!= 'draft'"
+                        />
+                    <button 
+                        name="action_create_invoices"
+                        type="object"
+                        string="Génerer la Facture"
+                        class="btn-primary"
+                        invisible="state!= 'confirm'"
+                        />
+                    <field name="state" widget="statusbar" statusbar_visible="draft,waiting,confirm,paid,done,cancel"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="session_id"/>
+                        <field name="trainee_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_training_registration_list"  model="ir.ui.view">
+        <field name="name">training.registration.list</field>
+        <field name="model">training.registration</field>
+        <field name="arch" type="xml">
+            <!-- editable="bottom" multi_edit="1" edition  multiligne en ligne -->
+            <list>
+                <field name="formation_id" optional="show" readonly="state!='draft'"/>
+                <field name="trainee_id" optional="show" readonly="state!='draft'"/>
+                <field 
+                    name="state" 
+                    widget="badge"
+                    decoration-info="state == 'draft'"
+                    decoration-warning="state =='confirmed'"
+                    decoration-success="state =='done'"
+                    decoration-danger="state =='cancel'"
+                    optional="show"
+                />
+            </list>
+        </field>
+    </record>
+   
+
+</odoo>

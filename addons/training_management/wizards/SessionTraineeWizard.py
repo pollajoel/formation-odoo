@@ -11,8 +11,14 @@ class SessionTraineeWizard(models.TransientModel):
         session = self.env["training.session"].browse(
             self.env.context.get("active_id")
         )
-        session.trainee_ids = [ Command.link(participant.id) for participant in self.participant_id]
-    
+        for participant in self.participant_id:
+            self.env['training.registration'].create(
+                {
+                    "session_id": session.id,
+                    "trainee_id": participant.id
+                }
+            )
+        return {"type":"ir.actions.act_window_close"}
     def action_cancel(self):
         return {"type":"ir.actions.act_window_close"}
         

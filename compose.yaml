@@ -55,6 +55,17 @@ services:
       - "5433:5432"
     networks:
       - odoo
+  mailpit:
+    image: axllent/mailpit:v1.27
+    networks:
+      - odoo
+    depends_on:
+      - odoo
+    container_name: training-mailpit
+    restart: always
+    ports:
+      - "8025:8025"
+      - "1025:1025"
 
 networks:
   odoo:
