@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Catégorie du module, visible dans Paramètres > Groupes -->
+    <record id="module_category_training" model="ir.module.category">
+        <field name="name">Training Management</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- Privilege : regroupe les groupes de cette catégorie
+         dans le formulaire utilisateur (menu déroulant au lieu de cases) -->
+    <record id="training_privilege" model="res.groups.privilege">
+        <field name="name">Training Access</field>
+        <field name="category_id" ref="module_category_training"/>
+    </record>
+
+    <!-- Groupe : Formateur -->
+    <record id="group_training_trainer" model="res.groups">
+        <field name="name">Trainer</field>
+        <field name="privilege_id" ref="training_privilege"/>
+        <!-- les formateurs sont des utilisateurs internes -->
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!-- Groupe : Responsable de formation -->
+    <record id="group_training_manager" model="res.groups">
+        <field name="name">Trainer Manager</field>
+        <field name="privilege_id" ref="training_privilege"/>
+        <!-- hérite automatiquement des droits formateur -->
+        <field name="implied_ids" eval="[(4, ref('group_training_trainer'))]"/>
+    </record>
+
+    <!-- Groupe : Apprenant -->
+    <record id="group_training_trainee" model="res.groups">
+        <field name="name">Trainee</field>
+        <field name="privilege_id" ref="training_privilege"/>
+        <!-- les apprenants sont des utilisateurs portail (externes) -->
+        <field name="implied_ids" eval="[(4, ref('base.group_portal'))]"/>
+    </record>
+    <!-- rajouter des rules -->
+    <record id="training_session_trainer_rule" model="ir.rule">
+        <field name="name">Trainer own sessions</field>
+        <field name="model_id" ref="model_training_session"/>
+        <field name="domain_force">
+            [('trainer_id.user_id', '=', user.id)]
+        </field>
+        <field name="groups" eval="[(4, ref('group_training_trainer'))]"/>
+    </record>
+
+
+
+
+
+
+
+
+</odoo>

@@ -1,7 +1,11 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_training_trainer,training.trainer,model_training_trainer,,1,1,1,1
-access_training_trainee,training.trainee,model_training_trainee,,1,1,1,1
-access_training_formation,training.formation,model_training_formation,,1,1,1,1
-access_training_session,training.session,model_training_session,,1,1,1,1
+access_training_trainer_trainer_manager,training.trainer,model_training_trainer,group_training_manager,1,1,1,1
+access_training_trainer_trainer,training.trainer,model_training_trainer,group_training_trainer,0,0,0,0
+access_training_trainee_manager,training.trainee,model_training_trainee,group_training_manager,1,1,1,1
+access_training_trainee_trainer,training.trainee,model_training_trainee,group_training_trainer,1,0,0,0
+access_training_formation_manager,training.formation,model_training_formation,group_training_manager,1,1,1,1
+access_training_formation_trainer,training.formation,model_training_formation,group_training_trainer,1,0,0,0
+access_training_session_manager,training.session,model_training_session,group_training_manager,1,1,1,1
+access_training_session_trainer,training.session,model_training_session,group_training_trainer,1,1,0,0
 access_session_trainee_wizard,session.trainee.wizard,model_session_trainee_wizard,base.group_user,1,1,1,1
-access_training_registration,training.registration,model_training_registration,base.group_user,1,1,1,1
+access_training_registration,training.registration,model_training_registration,group_training_manager,1,1,1,1

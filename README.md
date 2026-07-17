@@ -59,3 +59,5 @@ Docker Compose va automatiquement :
 - 📥 Télécharger les images `odoo:19` et `postgres:16`
 - 🌐 Créer un réseau virtuel isolé entre les services
 - 💾 Monter les volumes persistants pour les données
+
+odoo shell -d master

@@ -15,18 +15,31 @@
                     <button 
                         name="action_create_invoices"
                         type="object"
-                        string="Génerer la Facture"
+                        string="Envoyer la Facture"
                         class="btn-primary"
                         invisible="state!= 'confirm'"
                         />
                     <field name="state" widget="statusbar" statusbar_visible="draft,waiting,confirm,paid,done,cancel"/>
                 </header>
                 <sheet>
+                    <!-- web_ribbon -->
+                    <widget name="web_ribbon"
+                       title="payé"
+                       bg_color="bg-warning"
+                       invisible="state != 'paid'" />
+
                     <group>
-                        <field name="session_id"/>
-                        <field name="trainee_id"/>
+                        <group>
+                            <group>
+                                <field name="session_id"/>
+                            </group>
+                            <group>
+                                <field name="trainee_id"/>
+                            </group>
+                        </group>
                     </group>
                 </sheet>
+                 <chatter/>
             </form>
         </field>
     </record>
