@@ -1,0 +1,14 @@
+<odoo>
+    <record id="digest_digest_view_form_inherit_training" model="ir.ui.view">
+        <field name="name">digest.digest.form.inherit.training</field>
+        <field name="model">digest.digest</field>
+        <field name="inherit_id" ref="digest.digest_digest_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='custom']" position="after">
+                <group string="Training number of trainee" groups="base.group_system">
+                    <field name="kpi_training_new_trainees"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
