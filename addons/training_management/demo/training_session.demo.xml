@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="session_python_batch1" model="training.session">
+        <field name="name">Python Fundamentals - Session 1</field>
+        <field name="formation_id" ref="formation_python"/>
+        <field name="trainer_id" ref="trainer_02"/>
+        <field name="start_date">2026-08-10</field>
+        <field name="end_date">2026-08-14</field>
+        <field name="capacity">15</field>
+        <field name="location">Paris - Salle A</field>
+        <field name="state">confirmed</field>
+        <field name="notes">Session intensive sur 5 jours, niveau débutant.</field>
+    </record>
+
+    <record id="session_odoo_batch1" model="training.session">
+        <field name="name">Odoo Development - Session 1</field>
+        <field name="formation_id" ref="formation_odoo"/>
+        <field name="trainer_id" ref="trainer_01"/>
+        <field name="start_date">2026-09-01</field>
+        <field name="end_date">2026-09-05</field>
+        <field name="capacity">10</field>
+        <field name="location">Lyon - Salle B</field>
+        <field name="state">draft</field>
+        <field name="notes">Formation avancée au développement de modules Odoo.</field>
+    </record>
+
+    <record id="session_java_batch1" model="training.session">
+        <field name="name">Java Programming - Session 1</field>
+        <field name="formation_id" ref="formation_java"/>
+        <field name="trainer_id" ref="trainer_03"/>
+        <field name="start_date">2026-07-01</field>
+        <field name="end_date">2026-07-06</field>
+        <field name="capacity">12</field>
+        <field name="location">Remote</field>
+        <field name="state">done</field>
+        <field name="notes">Session terminée avec succès.</field>
+    </record>
+
+    <record id="session_python_batch2" model="training.session">
+        <field name="name">Python Fundamentals - Session 2</field>
+        <field name="formation_id" ref="formation_python"/>
+        <field name="trainer_id" ref="trainer_02"/>
+        <field name="start_date">2026-10-05</field>
+        <field name="end_date">2026-10-09</field>
+        <field name="capacity">20</field>
+        <field name="location">Paris - Salle A</field>
+        <field name="state">draft</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mail_template_attendance_signature" model="mail.template">
+        <field name="name">Demande de signature de présence</field>
+        <field name="model_id" ref="model_training_attendance"/>
+        <field name="subject">Confirmez votre présence - {{ object.session_id.name }}</field>
+        <field name="email_to">{{ object.trainee_id.email }}</field>
+        <field name="use_default_to">False</field>
+        <field name="auto_delete">False</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Bonjour <t t-out="object.trainee_id.name"/>,</p>
+                <p>
+                    Merci de confirmer votre présence à la session
+                    <b><t t-out="object.session_id.name"/></b> du <t t-out="object.date"/>.
+                </p>
+                <p>
+                    <a t-attf-href="/training/attendance/sign/#{object.id}/#{object.signature_token}"
+                       style="background-color:#875A7B;color:#ffffff;padding:10px 20px;text-decoration:none;border-radius:4px;">
+                        Confirmer ma présence
+                    </a>
+                </p>
+            </div>
+        </field>
+    </record>
+
+</odoo>

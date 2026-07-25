@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="id_portal_my_home_traininig" inherit_id="portal.portal_my_home">
+        <xpath expr="//div[contains(@class, 'o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/training_management/static/src/img/lobtention-du-diplome.png'"/>
+                <t t-set="title">Your training</t>
+                <t t-set="text">See your Training</t>
+                <t t-set="url" t-value="'/my/trainings'"/>
+                <t t-set="config_card" t-value="True"/>
+            </t>
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/portal/static/src/img/portal-addresses.svg'"/>
+                <t t-set="title">Your Sessions</t>
+                <t t-set="text">See your Training sessions</t>
+                <t t-set="url" t-value="'/my/training'"/>
+                <t t-set="config_card" t-value="True"/>
+            </t>
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/portal/static/src/img/portal-addresses.svg'"/>
+                <t t-set="title">Your attendane</t>
+                <t t-set="text">See your attendance</t>
+                <t t-set="url" t-value="'/my/training'"/>
+                <t t-set="config_card" t-value="True"/>
+            </t>
+
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/portal/static/src/img/portal-addresses.svg'"/>
+                <t t-set="title">Your Cerificates</t>
+                <t t-set="text">See your Certificates</t>
+                <t t-set="url" t-value="'/my/training'"/>
+                <t t-set="config_card" t-value="True"/>
+            </t>
+        </xpath>
+    </template>
+
+
+
+    <template id="portal_my_trainngs">
+        <t t-call="portal.portal_layout">
+            <h2>Mes Formations</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Formation</th>
+                         <th>Session</th>
+                          <th>Statut</th>
+                    </tr>
+                </thead>
+                <tr t-foreach="sessions" t-as="enrollement">
+                    <td>
+                        <span t-field="enrollement.session_id.formation_id.name"></span>
+                    </td>
+                    <td>
+                        <span t-field="enrollement.session_id.name"></span>
+                    </td>
+                    <td>
+                        <span t-field="enrollement.state"></span>
+                    </td>
+
+                </tr>
+            </table>
+
+        </t>
+    </template>
+
+
+
+
+
+
+
+
+
+
+</odoo>

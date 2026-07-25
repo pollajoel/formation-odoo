@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import models, fields
+from odoo import models, fields, api
 
 
 class TrainingFormation(models.Model):
@@ -12,15 +12,16 @@ class TrainingFormation(models.Model):
     duration = fields.Float(string="Duration (Hours)")
     price    = fields.Float()
     active   = fields.Boolean(default=True)
-    def create(self, vals):
-        # créer une nouvelle formation
-        product = self.env["product.template"].create({
-            "name": vals.get("name"),
-            "list_price": vals.get("list_price", 0.0),
-            "type": "service",
-            "invoice_policy": "order" # order et delivery => odoo attends que le service soit marqué comme réalisé ( pour générer un facture)
-        })
-        # associer le produit à la formation
-        vals["product_id"] = product.id
-        # retourner la formation courante
-        return super().create(vals)
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if not vals.get("product_id"):
+                product = self.env["product.template"].create({
+                    "name": vals.get("name"),
+                    "list_price": vals.get("price", 0.0),
+                    "type": "service",
+                    "invoice_policy": "order",
+                })
+                vals["product_id"] = product.id
+        return super().create(vals_list)

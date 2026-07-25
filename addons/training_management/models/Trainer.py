@@ -30,6 +30,14 @@ class Trainer(models.Model):
     def create(self, vals_list):
         trainers = super().create(vals_list)
         for trainer in trainers:
+            if trainer.user_id:
+                continue
+            existing_user = self.env['res.users'].sudo().search(
+                [('login', '=', trainer.email)], limit=1
+            )
+            if existing_user:
+                trainer.user_id = existing_user.id
+                continue
             user = self.env['res.users'].create({
                     'name': trainer.name,
                     'email': trainer.email,

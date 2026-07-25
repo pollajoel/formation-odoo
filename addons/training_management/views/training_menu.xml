@@ -70,6 +70,14 @@
         <field name="view_mode">list,form</field>
      </record>
 
+
+     <record id="action_training_certificat" model="ir.actions.act_window">
+        <field name="name">Attesation de fin de formation</field>
+        <field name="res_model">training.certificate</field>
+        <field name="view_mode">list,form</field>
+     </record>
+
+
     <!-- Menus -->
     <menuitem id="training_menu_root"
               name="Training Management"
@@ -104,5 +112,9 @@
               parent="training_menu_root"
               action="action_training_registration"
               sequence="20"/>
-
+    <menuitem id="training_certificate"
+              name="Attestations"
+              parent="training_menu_root"
+              action="action_training_certificat"
+              sequence="20"/>
 </odoo>

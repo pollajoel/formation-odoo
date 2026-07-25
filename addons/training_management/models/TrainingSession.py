@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
-from odoo.exceptions import  ValidationError
+from odoo import models, _, fields, api
+from odoo.exceptions import  ValidationError, UserError
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -38,6 +38,13 @@ class TrainingSession(models.Model):
         # store=True  => si on veut persister la donnée en base
         # compute_sudo=True => si le calcul doit contourner les règles de sécurités
     )
+
+    total_trainer = fields.Integer(
+        compute="_compute_trainer",
+        default=0,
+        string="Nombre de sessions du formateur",
+        store=True
+    )
     
     def action_open_trainee_view(self):
         return
@@ -50,6 +57,43 @@ class TrainingSession(models.Model):
 
     def action_cancel(self):
         self.write({"state":"cancel"})
+    
+    def action_generate_attendance_sheet(self):
+        self.ensure_one()
+        sheet = self.env["training.attendance.sheet"].search([
+            ("session_id", "=", self.id)
+        ], limit=1)
+        if not sheet:
+            sheet = self.env["training.attendance.sheet"].create(
+               {
+                 "session_id": self.id,
+                 "date": fields.Date.today()
+               }
+            )
+        Attendance = self.env["training.attendance"]
+        existing_trainee_ids = set(Attendance.search([
+            ("sheet_id", "=", sheet.id)
+        ]).trainee_id.ids)
+        line = []
+        for trainee in self.registration_ids.mapped("trainee_id"):
+            if trainee.id in existing_trainee_ids:
+                continue
+            line.append(
+                {
+                    "sheet_id": sheet.id,
+                    "session_id": self.id,
+                    "trainee_id": trainee.id
+            })
+        if line:
+            Attendance.create(line)
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Feuille d'appel",
+            "res_model": "training.attendance.sheet",
+            "view_mode": "form",
+            "res_id": sheet.id
+        }
+
 
     def open_add_trainee_wizard(self):
         self.ensure_one()
@@ -64,11 +108,22 @@ class TrainingSession(models.Model):
                 "excluded_trainee_id": self.registration_ids.mapped("trainee_id")
             },
         }
+
     @api.depends("registration_ids")
     def _compute_stats(self):
         for trainingSession in self:
             trainingSession.total_trainee = len(trainingSession.registration_ids)
-    
+
+    @api.depends("trainer_id")
+    def _compute_trainer(self):
+        for trainingSession in self:
+            if trainingSession.trainer_id:
+                trainingSession.total_trainer = self.search_count(
+                    [("trainer_id", "=", trainingSession.trainer_id.id)]
+                )
+            else:
+                trainingSession.total_trainer = 0
+
     @api.constrains('start_date', 'end_date')
     def _check_dates(self):
         for trainingSession in self:
@@ -82,3 +137,44 @@ class TrainingSession(models.Model):
                 raise ValidationError("Le nombre participant dépasse la capacité de la session")
             if( trainingSession.capacity <= 0 ):
                 raise ValidationError("La capacité doit être supérieur à 0")
+    
+    def action_send_attendance_requests( self ):
+        self.ensure_one()
+        if  not self.registration_ids:
+            raise UserError(_("Aucun participant n'est inscrit à cette session."))
+        sheet = self.env["training.attendance.sheet"].search([
+            ("session_id", "=", self.id)
+        ], limit=1)
+
+        if not sheet:
+            sheet = self.env["training.attendance.sheet"].create({
+                "session_id": self.id,
+                "date": fields.Date.today()
+            })
+        Attendance = self.env["training.attendance"]
+        trainees_without_email = []
+
+        for enrollment in self.registration_ids:
+            # ne pas créer deux lignes pour le m^me participant
+            line = Attendance.search([
+                ("sheet_id", "=", sheet.id),
+                ("trainee_id", "=", enrollment.trainee_id.id)
+            ], limit=1)
+            if not line:
+                line = Attendance.create({
+                    "sheet_id": sheet.id,
+                    "session_id": self.id,
+                    "trainee_id": enrollment.trainee_id.id,
+                })
+            if not line.trainee_id.email:
+                trainees_without_email.append(line.trainee_id.name)
+                continue
+            line.action_send_signature_email()
+
+        if trainees_without_email:
+            raise UserError(_(
+                "Les convocations ont été envoyées aux autres participants. "
+                "Impossible d'envoyer à : %(trainees)s (email manquant).",
+                trainees=", ".join(trainees_without_email),
+            ))
+        return True

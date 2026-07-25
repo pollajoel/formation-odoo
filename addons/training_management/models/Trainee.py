@@ -37,3 +37,6 @@ class Trainee(models.Model):
             )
             for wizard_user in wizard_users:
                 wizard_user.action_grant_access()
+    def unlink(self):
+        self.mapped('user_id').unlink()
+        return super().unlink()

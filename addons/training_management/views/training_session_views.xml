@@ -6,10 +6,11 @@
             <form string="Sessions">
                 <!-- workflow -->
                 <header>
-                    
                     <button  string="Confirmed" class="oe_highlight" type="object" name="action_confirm" invisible="state !='draft'"/>
                     <button  string="Done"      class="oe_highlight" type="object" name="action_done" invisible="state !='confirmed'"/>
                     <button  string="Cancel"    class="oe_highlight" type="object" name="action_cancel"  invisible="state == 'cancel'"/>
+                     <button string="Feuille d'appel"    class="oe_highlight" type="object" name="action_generate_attendance_sheet"  invisible="state == 'confirmed'"/>
+                    <button string="Envoyer les demandes de présence"    class="oe_highlight" type="object" name="action_send_attendance_requests"  invisible="state == 'confirmed'"/>
                     <button  string="Ajouter un participant" class="oe_highlight" type="object" name="open_add_trainee_wizard" invisible="state != 'draft'"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done,cancel"/>
                 </header>

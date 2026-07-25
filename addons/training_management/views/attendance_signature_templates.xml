@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="attendance_signature_page" name="Signature de présence">
+        <html>
+            <head>
+                <meta charset="utf-8"/>
+                <title>Confirmer ma présence</title>
+                <style>
+                    body { font-family: sans-serif; max-width: 480px; margin: 40px auto; padding: 0 16px; color: #333; }
+                    h1 { font-size: 20px; }
+                    #signature-pad {
+                        border: 1px solid #ccc;
+                        border-radius: 4px;
+                        width: 100%;
+                        height: 200px;
+                        touch-action: none;
+                    }
+                    .actions { margin-top: 16px; display: flex; gap: 8px; }
+                    button {
+                        padding: 10px 18px;
+                        border-radius: 4px;
+                        border: none;
+                        cursor: pointer;
+                        font-size: 14px;
+                    }
+                    .btn-clear { background: #eee; color: #333; }
+                    .btn-confirm { background: #875A7B; color: #fff; }
+                </style>
+            </head>
+            <body>
+                <h1>Bonjour <t t-esc="attendance.trainee_id.name"/></h1>
+                <p>
+                    Merci de confirmer votre présence à la session
+                    <b><t t-esc="attendance.session_id.name"/></b>
+                    du <t t-esc="attendance.date"/> en signant ci-dessous.
+                </p>
+
+                <canvas id="signature-pad"></canvas>
+
+                <form t-attf-action="/training/attendance/sign/#{attendance.id}/#{token}/submit" method="post" id="signature-form">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <input type="hidden" name="signature" id="signature-input"/>
+                    <div class="actions">
+                        <button type="button" class="btn-clear" id="clear-btn">Effacer</button>
+                        <button type="submit" class="btn-confirm" id="confirm-btn">Confirmer ma présence</button>
+                    </div>
+                </form>
+
+                <script>
+                    (function () {
+                        var canvas = document.getElementById("signature-pad");
+                        var ctx = canvas.getContext("2d");
+                        var drawing = false;
+                        var hasStroke = false;
+
+                        function resize() {
+                            var ratio = window.devicePixelRatio || 1;
+                            canvas.width = canvas.offsetWidth * ratio;
+                            canvas.height = canvas.offsetHeight * ratio;
+                            ctx.scale(ratio, ratio);
+                            ctx.lineWidth = 2;
+                            ctx.lineCap = "round";
+                            ctx.strokeStyle = "#000";
+                        }
+                        resize();
+
+                        function pos(evt) {
+                            var rect = canvas.getBoundingClientRect();
+                            var point = evt.touches ? evt.touches[0] : evt;
+                            return {
+                                x: point.clientX - rect.left,
+                                y: point.clientY - rect.top
+                            };
+                        }
+
+                        function start(evt) {
+                            drawing = true;
+                            hasStroke = true;
+                            var p = pos(evt);
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            evt.preventDefault();
+                        }
+
+                        function move(evt) {
+                            if (!drawing) return;
+                            var p = pos(evt);
+                            ctx.lineTo(p.x, p.y);
+                            ctx.stroke();
+                            evt.preventDefault();
+                        }
+
+                        function end() {
+                            drawing = false;
+                        }
+
+                        canvas.addEventListener("mousedown", start);
+                        canvas.addEventListener("mousemove", move);
+                        window.addEventListener("mouseup", end);
+                        canvas.addEventListener("touchstart", start);
+                        canvas.addEventListener("touchmove", move);
+                        canvas.addEventListener("touchend", end);
+
+                        document.getElementById("clear-btn").addEventListener("click", function () {
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                            hasStroke = false;
+                        });
+
+                        document.getElementById("signature-form").addEventListener("submit", function (evt) {
+                            if (!hasStroke) {
+                                evt.preventDefault();
+                                alert("Merci de signer avant de confirmer.");
+                                return;
+                            }
+                            document.getElementById("signature-input").value = canvas.toDataURL("image/png");
+                        });
+                    })();
+                </script>
+            </body>
+        </html>
+    </template>
+
+    <template id="attendance_signature_thanks" name="Présence confirmée">
+        <html>
+            <head>
+                <meta charset="utf-8"/>
+                <title>Présence confirmée</title>
+                <style>
+                    body { font-family: sans-serif; max-width: 480px; margin: 80px auto; padding: 0 16px; color: #333; text-align: center; }
+                </style>
+            </head>
+            <body>
+                <h1>Merci !</h1>
+                <p>
+                    Votre présence à la session
+                    <b><t t-esc="attendance.session_id.name"/></b>
+                    a bien été enregistrée.
+                </p>
+            </body>
+        </html>
+    </template>
+
+    <template id="attendance_signature_already_signed" name="Présence déjà confirmée">
+        <html>
+            <head>
+                <meta charset="utf-8"/>
+                <title>Présence déjà confirmée</title>
+                <style>
+                    body { font-family: sans-serif; max-width: 480px; margin: 80px auto; padding: 0 16px; color: #333; text-align: center; }
+                </style>
+            </head>
+            <body>
+                <h1>Déjà signé</h1>
+                <p>
+                    Votre présence à la session
+                    <b><t t-esc="attendance.session_id.name"/></b>
+                    a déjà été confirmée le <t t-esc="attendance.signed_at"/>.
+                </p>
+            </body>
+        </html>
+    </template>
+
+    <template id="attendance_signature_invalid" name="Lien invalide">
+        <html>
+            <head>
+                <meta charset="utf-8"/>
+                <title>Lien invalide</title>
+                <style>
+                    body { font-family: sans-serif; max-width: 480px; margin: 80px auto; padding: 0 16px; color: #333; text-align: center; }
+                </style>
+            </head>
+            <body>
+                <h1>Lien invalide ou expiré</h1>
+                <p>Ce lien de confirmation de présence n'est plus valide.</p>
+            </body>
+        </html>
+    </template>
+
+</odoo>

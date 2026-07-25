@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_training_attendance_sheet_form" model="ir.ui.view">
+        <field name="name">training.attendance.sheet.form</field>
+        <field name="model">training.attendance.sheet</field>
+        <field name="arch" type="xml">
+            <form string="Feuille d'appel">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="session_id" readonly="1"/>
+                            <field name="trainer_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="date" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Présences">
+                            <field name="line_ids">
+                                <list
+                                    editable="bottom"
+                                    decoration-success="state == 'present'"
+                                    decoration-danger="state == 'absent'"
+                                    decoration-warning="state == 'late'"
+                                    decoration-info="state == 'excused'"
+                                >
+                                    <field name="registration_trainee_ids" column_invisible="1"/>
+                                    <field name="trainee_id" domain="[('id', 'in', registration_trainee_ids)]" readonly="signature_state == 'signed'"/>
+                                    <field name="state" readonly="signature_state == 'signed'"/>
+                                    <field name="signature_state" widget="badge" decoration-success="signature_state == 'signed'" decoration-warning="signature_state == 'pending'"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_training_attendance_sheet_list" model="ir.ui.view">
+        <field name="name">training.attendance.sheet.list</field>
+        <field name="model">training.attendance.sheet</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="session_id"/>
+                <field name="date"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>

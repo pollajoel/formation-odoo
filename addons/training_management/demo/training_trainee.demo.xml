@@ -1,0 +1,119 @@
+<odoo>
+    <record id="partner_trainee_01" model="res.partner">
+        <field name="name">Alice Martin</field>
+        <field name="email">alice.martin@example.com</field>
+    </record>
+    <record id="trainee_01" model="training.trainee">
+        <field name="partner_id" ref="partner_trainee_01"/>
+        <field name="level">beginner</field>
+        <field name="organization">OpenAI Academy</field>
+    </record>
+
+    <record id="partner_trainee_02" model="res.partner">
+        <field name="name">Lucas Bernard</field>
+        <field name="email">lucas.bernard@example.com</field>
+    </record>
+    <record id="trainee_02" model="training.trainee">
+        <field name="partner_id" ref="partner_trainee_02"/>
+        <field name="level">intermediate</field>
+        <field name="organization">OpenAI Academy</field>
+    </record>
+
+    <record id="partner_trainee_03" model="res.partner">
+        <field name="name">Emma Dubois</field>
+        <field name="email">emma.dubois@example.com</field>
+    </record>
+    <record id="trainee_03" model="training.trainee">
+        <field name="partner_id" ref="partner_trainee_03"/>
+        <field name="level">advanced</field>
+        <field name="organization">OpenAI Academy</field>
+    </record>
+
+    <record id="partner_trainee_04" model="res.partner">
+        <field name="name">Hugo Petit</field>
+        <field name="email">hugo.petit@example.com</field>
+    </record>
+    <record id="trainee_04" model="training.trainee">
+        <field name="partner_id" ref="partner_trainee_04"/>
+        <field name="level">beginner</field>
+        <field name="organization">Tech School</field>
+    </record>
+
+    <record id="partner_trainee_05" model="res.partner">
+        <field name="name">Léa Moreau</field>
+        <field name="email">lea.moreau@example.com</field>
+    </record>
+    <record id="trainee_05" model="training.trainee">
+        <field name="partner_id" ref="partner_trainee_05"/>
+        <field name="level">intermediate</field>
+        <field name="organization">Tech School</field>
+    </record>
+
+    <!-- 6 à 30 -->
+
+    <record id="partner_trainee_06" model="res.partner"><field name="name">Noah Simon</field><field name="email">noah.simon@example.com</field></record>
+    <record id="trainee_06" model="training.trainee"><field name="partner_id" ref="partner_trainee_06"/><field name="level">advanced</field><field name="organization">Digital Lab</field></record>
+
+    <record id="partner_trainee_07" model="res.partner"><field name="name">Chloé Laurent</field><field name="email">chloe.laurent@example.com</field></record>
+    <record id="trainee_07" model="training.trainee"><field name="partner_id" ref="partner_trainee_07"/><field name="level">beginner</field><field name="organization">Digital Lab</field></record>
+
+    <record id="partner_trainee_08" model="res.partner"><field name="name">Nathan Roux</field><field name="email">nathan.roux@example.com</field></record>
+    <record id="trainee_08" model="training.trainee"><field name="partner_id" ref="partner_trainee_08"/><field name="level">intermediate</field><field name="organization">Digital Lab</field></record>
+
+    <record id="partner_trainee_09" model="res.partner"><field name="name">Sarah Gauthier</field><field name="email">sarah.gauthier@example.com</field></record>
+    <record id="trainee_09" model="training.trainee"><field name="partner_id" ref="partner_trainee_09"/><field name="level">advanced</field><field name="organization">Digital Lab</field></record>
+
+    <record id="partner_trainee_10" model="res.partner"><field name="name">Tom Fontaine</field><field name="email">tom.fontaine@example.com</field></record>
+    <record id="trainee_10" model="training.trainee"><field name="partner_id" ref="partner_trainee_10"/><field name="level">beginner</field><field name="organization">Digital Lab</field></record>
+
+    <record id="partner_trainee_11" model="res.partner"><field name="name">Jade Chevalier</field><field name="email">jade.chevalier@example.com</field></record>
+    <record id="trainee_11" model="training.trainee"><field name="partner_id" ref="partner_trainee_11"/><field name="level">intermediate</field><field name="organization">Learning Center</field></record>
+
+    <record id="partner_trainee_12" model="res.partner"><field name="name">Louis Girard</field><field name="email">louis.girard@example.com</field></record>
+    <record id="trainee_12" model="training.trainee"><field name="partner_id" ref="partner_trainee_12"/><field name="level">advanced</field><field name="organization">Learning Center</field></record>
+
+    <record id="partner_trainee_13" model="res.partner"><field name="name">Camille Henry</field><field name="email">camille.henry@example.com</field></record>
+    <record id="trainee_13" model="training.trainee"><field name="partner_id" ref="partner_trainee_13"/><field name="level">beginner</field><field name="organization">Learning Center</field></record>
+
+    <record id="partner_trainee_14" model="res.partner"><field name="name">Gabriel Muller</field><field name="email">gabriel.muller@example.com</field></record>
+    <record id="trainee_14" model="training.trainee"><field name="partner_id" ref="partner_trainee_14"/><field name="level">intermediate</field><field name="organization">Learning Center</field></record>
+
+    <record id="partner_trainee_15" model="res.partner"><field name="name">Zoé Perrin</field><field name="email">zoe.perrin@example.com</field></record>
+    <record id="trainee_15" model="training.trainee"><field name="partner_id" ref="partner_trainee_15"/><field name="level">advanced</field><field name="organization">Learning Center</field></record>
+
+    <!-- Même principe jusqu'au 30 -->
+
+    <record id="partner_trainee_16" model="res.partner"><field name="name">Trainee 16</field><field name="email">trainee16@example.com</field></record>
+    <record id="trainee_16" model="training.trainee"><field name="partner_id" ref="partner_trainee_16"/><field name="level">beginner</field><field name="organization">Demo Org</field></record>
+
+    <record id="partner_trainee_17" model="res.partner"><field name="name">Trainee 17</field><field name="email">trainee17@example.com</field></record>
+    <record id="trainee_17" model="training.trainee"><field name="partner_id" ref="partner_trainee_17"/><field name="level">intermediate</field><field name="organization">Demo Org</field></record>
+
+    <record id="partner_trainee_18" model="res.partner"><field name="name">Trainee 18</field><field name="email">trainee18@example.com</field></record>
+    <record id="trainee_18" model="training.trainee"><field name="partner_id" ref="partner_trainee_18"/><field name="level">advanced</field><field name="organization">Demo Org</field></record>
+
+    <!-- ... -->
+
+    <record id="partner_trainee_30" model="res.partner">
+        <field name="name">Trainee 30</field>
+        <field name="email">trainee30@example.com</field>
+    </record>
+    <record id="trainee_30" model="training.trainee">
+        <field name="partner_id" ref="partner_trainee_30"/>
+        <field name="level">advanced</field>
+        <field name="organization">Demo Org</field>
+    </record>
+
+
+    
+    <record id="partner_trainee_31" model="res.partner">
+        <field name="name">Trainee 31</field>
+        <field name="email">trainee31@example.com</field>
+    </record>
+    <record id="trainee_31" model="training.trainee">
+        <field name="partner_id" ref="partner_trainee_31"/>
+        <field name="level">advanced</field>
+        <field name="organization">Demo Org</field>
+    </record>
+
+</odoo>

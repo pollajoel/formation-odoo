@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ========================= -->
+    <!-- Trainers Demo Data -->
+    <!-- ========================= -->
+
+    <record id="partner_trainer_01" model="res.partner">
+        <field name="name">Jean Dupont</field>
+        <field name="email">jean.dupont@example.com</field>
+    </record>
+
+    <record id="trainer_01" model="training.trainer">
+        <field name="partner_id" ref="partner_trainer_01"/>
+        <field name="speciality">Odoo</field>
+        <field name="available">True</field>
+    </record>
+
+    <record id="partner_trainer_02" model="res.partner">
+        <field name="name">Marie Martin</field>
+        <field name="email">marie.martin@example.com</field>
+    </record>
+
+    <record id="trainer_02" model="training.trainer">
+        <field name="partner_id" ref="partner_trainer_02"/>
+        <field name="speciality">Python</field>
+        <field name="available">True</field>
+    </record>
+
+    <record id="partner_trainer_03" model="res.partner">
+        <field name="name">Pierre Bernard</field>
+        <field name="email">pierre.bernard@example.com</field>
+    </record>
+
+    <record id="trainer_03" model="training.trainer">
+        <field name="partner_id" ref="partner_trainer_03"/>
+        <field name="speciality">Java</field>
+        <field name="available">True</field>
+    </record>
+
+    <record id="partner_trainer_04" model="res.partner">
+        <field name="name">Sophie Leroy</field>
+        <field name="email">sophie.leroy@example.com</field>
+    </record>
+
+    <record id="trainer_04" model="training.trainer">
+        <field name="partner_id" ref="partner_trainer_04"/>
+        <field name="speciality">Docker</field>
+        <field name="available">True</field>
+    </record>
+
+    <record id="partner_trainer_05" model="res.partner">
+        <field name="name">Thomas Robert</field>
+        <field name="email">thomas.robert@example.com</field>
+    </record>
+
+    <record id="trainer_05" model="training.trainer">
+        <field name="partner_id" ref="partner_trainer_05"/>
+        <field name="speciality">PostgreSQL</field>
+        <field name="available">False</field>
+    </record>
+
+    <record id="partner_trainer_06" model="res.partner">
+        <field name="name">Julie Petit</field>
+        <field name="email">julie.petit@example.com</field>
+    </record>
+
+    <record id="trainer_06" model="training.trainer">
+        <field name="partner_id" ref="partner_trainer_06"/>
+        <field name="speciality">DevOps</field>
+        <field name="available">True</field>
+    </record>
+
+    <record id="partner_trainer_07" model="res.partner">
+        <field name="name">Nicolas Moreau</field>
+        <field name="email">nicolas.moreau@example.com</field>
+    </record>
+
+    <record id="trainer_07" model="training.trainer">
+        <field name="partner_id" ref="partner_trainer_07"/>
+        <field name="speciality">Linux</field>
+        <field name="available">True</field>
+    </record>
+
+    <record id="partner_trainer_08" model="res.partner">
+        <field name="name">Camille Laurent</field>
+        <field name="email">camille.laurent@example.com</field>
+    </record>
+
+    <record id="trainer_08" model="training.trainer">
+        <field name="partner_id" ref="partner_trainer_08"/>
+        <field name="speciality">JavaScript</field>
+        <field name="available">True</field>
+    </record>
+
+    <record id="partner_trainer_09" model="res.partner">
+        <field name="name">Antoine Simon</field>
+        <field name="email">antoine.simon@example.com</field>
+    </record>
+
+    <record id="trainer_09" model="training.trainer">
+        <field name="partner_id" ref="partner_trainer_09"/>
+        <field name="speciality">React</field>
+        <field name="available">False</field>
+    </record>
+
+    <record id="partner_trainer_10" model="res.partner">
+        <field name="name">Claire Fontaine</field>
+        <field name="email">claire.fontaine@example.com</field>
+    </record>
+
+    <record id="trainer_10" model="training.trainer">
+        <field name="partner_id" ref="partner_trainer_10"/>
+        <field name="speciality">Intelligence Artificielle</field>
+        <field name="available">True</field>
+    </record>
+
+</odoo>

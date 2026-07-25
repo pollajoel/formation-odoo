@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="product_python" model="product.template">
+        <field name="name">Python Fundamentals</field>
+        <field name="type">service</field>
+        <field name="list_price">450</field>
+        <field name="invoice_policy">order</field>
+    </record>
+
+    <record id="formation_python" model="training.formation">
+        <field name="product_id" ref="product_python"/>
+        <field name="code">PY-001</field>
+        <field name="duration">35</field>
+        <field name="price">450</field>
+        <field name="description"><![CDATA[
+            Formation Python pour débutants.
+        ]]></field>
+    </record>
+
+    <record id="product_odoo" model="product.template">
+        <field name="name">Odoo Development</field>
+        <field name="type">service</field>
+        <field name="list_price">750</field>
+        <field name="invoice_policy">order</field>
+    </record>
+
+    <record id="formation_odoo" model="training.formation">
+        <field name="product_id" ref="product_odoo"/>
+        <field name="code">ODOO-001</field>
+        <field name="duration">40</field>
+        <field name="price">750</field>
+        <field name="description"><![CDATA[
+            Développement de modules Odoo.
+        ]]></field>
+    </record>
+
+    <record id="product_java" model="product.template">
+        <field name="name">Java Programming</field>
+        <field name="type">service</field>
+        <field name="list_price">650</field>
+        <field name="invoice_policy">order</field>
+    </record>
+
+    <record id="formation_java" model="training.formation">
+        <field name="product_id" ref="product_java"/>
+        <field name="code">JAVA-001</field>
+        <field name="duration">45</field>
+        <field name="price">650</field>
+        <field name="description"><![CDATA[
+            Développement Java SE.
+        ]]></field>
+    </record>
+
+</odoo>

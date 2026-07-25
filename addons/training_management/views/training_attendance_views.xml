@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_training_attendance_form" model="ir.ui.view">
+        <field name="name">training.attendance.form</field>
+        <field name="model">training.attendance</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="sheet_id" readonly="signature_state == 'signed'"/>
+                    <field name="session_id" readonly="1"/>
+                    <field name="registration_trainee_ids" invisible="1"/>
+                    <field name="trainee_id" domain="[('id', 'in', registration_trainee_ids)]" readonly="signature_state == 'signed'"/>
+                    <field name="state" readonly="signature_state == 'signed'"/>
+                    <field name="signature_state" widget="badge" decoration-success="signature_state == 'signed'" decoration-warning="signature_state == 'pending'"/>
+                    <field name="date" readonly="signature_state == 'signed'"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+</odoo>

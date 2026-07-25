@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_training_certificate_form" model="ir.ui.view">
+        <field name="name">training.certificate.form</field>
+        <field name="model">training.certificate</field>
+        <field name="arch" type="xml">
+            <form string="Attestation">
+                <header>
+                <button 
+                    name="%(action_report_training_certificate)d"
+                    type="action"
+                    string="Imprimer"
+                    class="btn-primary"
+                />
+                <field name="state" widget="statusbar" statusbar_visible="draft,issued"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="state != 'draft'"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="traine_id" readonly="state != 'draft'"/>
+                            <field name="session_id" readonly="state != 'draft'"/>
+                            <field name="formation_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="issue_date" readonly="state != 'draft'"/>
+                            <field name="pdf_attachment_id" readonly="1"/>
+                            <field name="verification_token" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_training_certificate_list" model="ir.ui.view">
+        <field name="name">training.certificate.list</field>
+        <field name="model">training.certificate</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="traine_id"/>
+                <field name="session_id"/>
+                <field name="formation_id" optional="show"/>
+                <field name="issue_date"/>
+                <field
+                    name="state"
+                    widget="badge"
+                    decoration-info="state == 'draft'"
+                    decoration-success="state == 'issued'"
+                />
+            </list>
+        </field>
+    </record>
+</odoo>
