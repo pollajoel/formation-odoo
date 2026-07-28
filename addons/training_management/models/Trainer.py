@@ -49,3 +49,9 @@ class Trainer(models.Model):
             })
             trainer.user_id = user.id
         return trainers
+    @api.model
+    def get_trainers_data(self):
+        total_trainers = self.env["training.trainer"].search_count([])
+        return {
+             'nbTrainers': total_trainers
+        }

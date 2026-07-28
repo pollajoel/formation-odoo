@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="training_management.dashboard"> 
+        <div class="o_training_dashboard p-4 flex gap-2">
+            <h2 class="mb-4">Tableau de bord Formation</h2>
+            <div class="d-flex justify-content-between">
+                <KpiCard value="state.nbTrainees" title="'Nombre d\'apprenants'"  onClick="() => this.openTrainees()"/>
+                <KpiCard value="state.nbTrainers" title="'Nombre de Formateurs'" onClick="() => this.openTrainers()"/>
+                <KpiCard value="state.nbTrainees" title="'Nombre de sessions en cours'" onClick="() => this.openSessions()"/>
+                <KpiCard value="state.nbFormations" title="'Nombre de Formations'" onClick="() => this.openTrainings()"/>
+            </div>
+            <div t-esc="'Voir les sessions'" t-on-click=" ()=> this.openBySession()"/>
+        </div>
+    </t>
+</templates>

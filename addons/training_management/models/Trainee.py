@@ -40,3 +40,10 @@ class Trainee(models.Model):
     def unlink(self):
         self.mapped('user_id').unlink()
         return super().unlink()
+    
+    @api.model
+    def get_trainees_data(self):
+        total_trainees = self.env["training.trainee"].search_count([])
+        return {
+             'nbTrainees': total_trainees
+        }

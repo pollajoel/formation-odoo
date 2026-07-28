@@ -39,5 +39,11 @@
         'demo/training_trainer.demo.xml',
         'demo/training_formation.demo.xml',
         'demo/training_session.demo.xml',
+        ],
+    'assets':{
+        "web.assets_backend" : [
+            "training_management/static/src/js/*.js",
+            "training_management/static/src/templates/*.xml"
         ]
+    }
 }

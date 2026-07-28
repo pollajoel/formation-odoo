@@ -25,3 +25,10 @@ class TrainingFormation(models.Model):
                 })
                 vals["product_id"] = product.id
         return super().create(vals_list)
+
+    @api.model
+    def get_formation_data(self):
+        total_formations = self.env["training.formation"].search_count([])
+        return {
+             'nbFormations': total_formations
+        }

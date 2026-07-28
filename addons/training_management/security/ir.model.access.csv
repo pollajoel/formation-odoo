@@ -7,6 +7,7 @@ access_training_formation_manager,training.formation,model_training_formation,gr
 access_training_formation_trainer,training.formation,model_training_formation,group_training_trainer,1,0,0,0
 access_training_session_manager,training.session,model_training_session,group_training_manager,1,1,1,1
 access_training_session_trainer,training.session,model_training_session,group_training_trainer,1,1,0,0
+access_training_session_trainee,training.trainee,model_training_trainee,group_training_trainee,1,0,0,0
 access_session_trainee_wizard,session.trainee.wizard,model_session_trainee_wizard,base.group_user,1,1,1,1
 access_training_registration,training.registration,model_training_registration,group_training_manager,1,1,1,1
 access_training_attendance_trainer,training.attendance,model_training_attendance,group_training_trainer,1,1,1,1
