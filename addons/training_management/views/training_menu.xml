@@ -75,12 +75,15 @@
      <record id="action_training_dashboard" model="ir.actions.client">
         <field name="name">Accueil</field>
         <field name="tag">training_management.dashboard</field>
-        <field name="target">current</field>
+        <!-- <field name="target">current</field> -->
+         <field name="target">fullscreen</field>
      </record>
     <!-- Menus -->
     <menuitem id="training_menu_root"
               name="Training Management"
-              sequence="10"/>
+              sequence="10"
+              action="action_training_dashboard"
+              />
 
     <menuitem id="trainee"
               name="Apprenant"

@@ -1,15 +1,184 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
-    <t t-name="training_management.dashboard"> 
-        <div class="o_training_dashboard p-4 flex gap-2">
-            <h2 class="mb-4">Tableau de bord Formation</h2>
-            <div class="d-flex justify-content-between">
-                <KpiCard value="state.nbTrainees" title="'Nombre d\'apprenants'"  onClick="() => this.openTrainees()"/>
-                <KpiCard value="state.nbTrainers" title="'Nombre de Formateurs'" onClick="() => this.openTrainers()"/>
-                <KpiCard value="state.nbTrainees" title="'Nombre de sessions en cours'" onClick="() => this.openSessions()"/>
-                <KpiCard value="state.nbFormations" title="'Nombre de Formations'" onClick="() => this.openTrainings()"/>
-            </div>
-            <div t-esc="'Voir les sessions'" t-on-click=" ()=> this.openBySession()"/>
+    <t t-name="training_management.dashboard">
+        <div class="o_training_layout">
+
+            <!-- ======================================
+                 SIDEBAR
+                 ====================================== -->
+            <aside class="o_training_sidebar">
+                <div class="sidebar-title">
+                   <t t-if="state.company">
+                     <img class="sidebar-company-logo" t-att-src="'data:image/png;base64,'+state.company.logo"/>
+                     <span class="sidebar-company-name" t-out="state.company.name"/>
+                   </t>
+                </div>
+
+                <!-- Tableau de bord -->
+                <div class="menu-section">
+                    <div class="menu-item" t-att-class="state.currentPage === 'dashboard' ? 'active' : ''" t-on-click="() => this.openPageChange('dashboard')">
+                        <div class="menu-left">
+                            <i class="fa fa-chart-pie"/>
+                            <span> Tableau de board </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu des formations -->
+                <div class="menu-section">
+                    <div class="menu-item has-submenu" t-on-click="() => this.toggleMenu('training')">
+                        <div class="menu-left">
+                            <i class="fa fa-book-open"/>
+                            <span>Formations</span>
+                        </div>
+                        <i class="fa fa-chevron-down submenu-arrow" t-att-class="state.trainingMenuOpen ? 'rotate' : ''"/>
+                    </div>
+                    <div class="submenu" t-att-class="state.trainingMenuOpen ? 'open' : ''">
+                        <div class="submenu-item" t-on-click="() => () => {}"> Liste des formations </div>
+                        <div class="submenu-item" t-on-click="() => () => {}"> Nouvelle formation </div>
+                    </div>
+                </div>
+
+                <!-- Menu des sessions -->
+                <div class="menu-section">
+                    <div class="menu-item has-submenu" t-on-click="() => this.toggleMenu('session')">
+                        <div class="menu-left">
+                            <i class="fa fa-calendar-alt"/>
+                            <span>Sessions</span>
+                        </div>
+                        <i class="fa fa-chevron-down submenu-arrow" t-att-class="state.sessionMenuOpen ? 'rotate' : ''"/>
+                    </div>
+                    <div class="submenu" t-att-class="state.sessionMenuOpen ? 'open' : ''">
+                        <div class="submenu-item">En cours</div>
+                        <div class="submenu-item">Terminées</div>
+                    </div>
+                </div>
+
+                <div class="menu-section">
+                    <div class="menu-item" t-att-class="state.currentPage === 'apps' ? 'active' : ''" t-on-click="() => this.openPageChange('apps')">
+                        <div class="menu-left">
+                            <i class="fa fa-cog"/>
+                            <span>Paramètres</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <ul>
+                    <li t-on-click="()=> this.openPageChange('dashboard')">Tableau de board</li>
+                    <li t-on-click="()=> this.openPageChange('training')">Formations</li>
+                    <li t-on-click="()=> this.openPageChange('session')">Sesssions</li>
+                </ul> -->
+            </aside>
+
+            <main class="o_training_content">
+           
+                <div class="dashboard-topbar">
+                    <div class="dashboard-title" t-esc="state.currentPage"/>
+                    <div class="d-flex align-items-center gap-3">
+                        <input type="text" class="dashboard-search" placeholder="Rechercher..."/>
+                        <div class="text-white">
+                            <i class="fa fa-bell fa-lg"/>
+                        </div>
+                        <div class="text-white">
+                            <i class="fa fa-user-circle fa-lg"/>
+                        </div>
+                    </div>
+                </div>
+                <!-- page dashboard -->
+                <t t-if="state.currentPage === 'dashboard'">
+                <!-- KPI -->
+                <div class="kpi-grid">
+                    <div class="kpi-card kpi-blue" onClick="() => this.openTrainees()">
+                        <div class="kpi-label">Apprenants</div>
+                        <div class="kpi-value"><t t-esc="state.nbTrainees"/></div>
+                    </div>
+                    <div class="kpi-card kpi-green"  onClick="() => this.openTrainers()" >
+                        <div class="kpi-label">Formateurs</div>
+                        <div class="kpi-value"><t t-esc="state.nbTrainers"/></div>
+                    </div>
+                    <div class="kpi-card kpi-red" onClick="() => this.openSessions()">
+                        <div class="kpi-label">Sessions actives</div>
+                        <div class="kpi-value"><t t-esc="state.nbSessions"/></div>
+                    </div>
+                    <div class="kpi-card kpi-purple" onClick="() => this.openTrainings()">
+                        <div class="kpi-label">Formations</div>
+                        <div class="kpi-value"><t t-esc="state.nbFormations"/></div>
+                    </div>
+                </div>
+
+                <!-- Graphiques -->
+                <div class="chart-grid">
+                    <div class="chart-card">
+                        <div class="chart-title">Évolution des inscriptions</div>
+                        <div class="fake-bars">
+                            <span style="height:40%"/>
+                            <span style="height:55%"/>
+                            <span style="height:70%"/>
+                            <span style="height:35%"/>
+                            <span style="height:65%"/>
+                            <span style="height:80%"/>
+                            <span style="height:50%"/>
+                            <span style="height:75%"/>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-title">Répartition</div>
+                        <div class="fake-donut"/>
+                    </div>
+                </div>
+
+                <!-- Bas de page -->
+                <div class="chart-grid">
+                    <div class="list-card">
+                        <div class="chart-title">Sessions récentes</div>
+                        <div class="list-row">
+                            <span>Python Avancé</span>
+                            <span class="text-success">En cours</span>
+                        </div>
+                        <div class="list-row">
+                            <span>Odoo 19 OWL</span>
+                            <span class="text-success">En cours</span>
+                        </div>
+                        <div class="list-row">
+                            <span>JavaScript Moderne</span>
+                            <span class="text-warning">Planifiée</span>
+                        </div>
+                        <div class="list-row">
+                            <span>Docker pour ERP</span>
+                            <span class="text-danger">Terminée</span>
+                        </div>
+                    </div>
+                    <div class="list-card">
+                        <div class="chart-title">Activité</div>
+                        <div class="fake-bars" style="height:180px">
+                            <span style="height:30%"/>
+                            <span style="height:45%"/>
+                            <span style="height:60%"/>
+                            <span style="height:55%"/>
+                            <span style="height:70%"/>
+                            <span style="height:85%"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+            <!-- page paramètres -->
+             <t t-if="state.currentPage === 'apps'">
+                <div class="apps-grid">
+                    <AppTile t-foreach="apps" 
+                      t-key="app.id"
+                      t-as="app"
+                      name="app.name"
+                      iconUrl="app.iconUrl"
+                      onClick="()=> this.openApp(app.id)"
+                      />
+                </div>
+             </t>
+
+
+            </main>
+
+
         </div>
     </t>
 </templates>

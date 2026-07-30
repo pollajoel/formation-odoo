@@ -1,0 +1,435 @@
+.o_training_layout {
+    display: flex;
+    height: 100vh;
+    background: #0b1220;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ========================================
+   SIDEBAR MODERNE
+   ======================================== */
+.o_training_sidebar {
+    width: 260px;
+    background: linear-gradient(180deg, #111827 0%, #0f172a 100%);
+    color: #fff;
+    padding: 20px 14px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 4px 0 30px rgba(0, 0, 0, 0.25);
+    overflow-y: auto;
+}
+
+.sidebar-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 22px;
+    font-weight: 700;
+    padding: 10px 12px 24px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.sidebar-company-logo {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: 6px;
+    background: #fff;
+    flex-shrink: 0;
+}
+
+.sidebar-company-name {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.25;
+    white-space: normal;
+    word-break: break-word;
+}
+
+/* ========================================
+   MENU PRINCIPAL
+   ======================================== */
+.menu-section {
+    margin-bottom: 8px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    border-radius: 14px;
+    cursor: pointer;
+    color: #cbd5e1;
+    transition: all 0.25s ease;
+    user-select: none;
+}
+
+.menu-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    transform: translateX(3px);
+}
+
+.menu-item.active {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    color: #fff;
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.35);
+}
+
+.menu-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.menu-left i {
+    width: 18px;
+    text-align: center;
+    font-size: 16px;
+}
+
+/* ========================================
+   SOUS-MENUS
+   ======================================== */
+.submenu-arrow {
+    font-size: 12px;
+    transition: transform 0.25s ease;
+}
+
+.submenu-arrow.rotate {
+    transform: rotate(180deg);
+}
+
+.submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+    margin-left: 10px;
+}
+
+.submenu.open {
+    max-height: 240px;
+}
+
+.submenu-item {
+    padding: 10px 14px 10px 42px;
+    border-radius: 10px;
+    color: #94a3b8;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.submenu-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    transform: translateX(3px);
+}
+
+.submenu-item.app-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.app-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+/* ========================================
+   PAGE APPS (grille façon Enterprise)
+   ======================================== */
+.apps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 20px;
+}
+
+.app-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 24px 16px;
+    border-radius: 18px;
+    background: rgba(17, 24, 39, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.app-tile:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.app-tile-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-size: 22px;
+    color: #111827;
+}
+
+.app-tile-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.app-tile-name {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* ========================================
+   CONTENU PRINCIPAL
+   ======================================== */
+.o_training_content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: radial-gradient(circle at top left, #111827, #0b1220 70%);
+    overflow: auto;
+    padding: 24px;
+}
+
+/* ========================================
+   TOP BAR
+   ======================================== */
+.dashboard-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.dashboard-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.dashboard-search {
+    width: 320px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 10px 14px;
+    color: #fff;
+    outline: none;
+}
+
+.dashboard-search::placeholder {
+    color: #94a3b8;
+}
+
+/* ========================================
+   KPI CARDS
+   ======================================== */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 22px;
+}
+
+.kpi-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 18px;
+    padding: 20px;
+    color: #fff;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.kpi-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.32);
+}
+
+.kpi-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), transparent 45%);
+    pointer-events: none;
+}
+
+.kpi-blue {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+}
+
+.kpi-green {
+    background: linear-gradient(135deg, #059669, #10b981);
+}
+
+.kpi-red {
+    background: linear-gradient(135deg, #dc2626, #ef4444);
+}
+
+.kpi-purple {
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+}
+
+.kpi-label {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 10px;
+}
+
+.kpi-value {
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+/* ========================================
+   CHART CARDS
+   ======================================== */
+.chart-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.chart-card {
+    background: rgba(17, 24, 39, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 20px;
+    padding: 20px;
+    color: #fff;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+}
+
+.chart-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #e5e7eb;
+}
+
+/* Faux graphique barres */
+.fake-bars {
+    display: flex;
+    align-items: end;
+    gap: 12px;
+    height: 220px;
+}
+
+.fake-bars span {
+    flex: 1;
+    border-radius: 8px 8px 0 0;
+    background: linear-gradient(180deg, #22c55e, #16a34a);
+}
+
+/* Donut fake */
+.fake-donut {
+    width: 180px;
+    height: 180px;
+    margin: 10px auto;
+    border-radius: 50%;
+    background: conic-gradient(#3b82f6 0 35%, #10b981 35% 60%, #f59e0b 60% 82%, #ef4444 82% 100%);
+    position: relative;
+}
+
+.fake-donut::before {
+    content: '';
+    position: absolute;
+    inset: 32px;
+    background: #111827;
+    border-radius: 50%;
+}
+
+/* ========================================
+   TABLE / LIST CARD
+   ======================================== */
+.list-card {
+    background: rgba(17, 24, 39, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 20px;
+    padding: 20px;
+    color: #fff;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+}
+
+.list-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.list-row:last-child {
+    border-bottom: 0;
+}
+
+/* ========================================
+   SCROLLBAR
+   ======================================== */
+.o_training_sidebar::-webkit-scrollbar,
+.o_training_content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.o_training_sidebar::-webkit-scrollbar-thumb,
+.o_training_content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 1200px) {
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .chart-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .o_training_sidebar {
+        width: 84px;
+        padding: 16px 10px;
+    }
+
+    .sidebar-title span,
+    .menu-left span,
+    .submenu,
+    .submenu-arrow {
+        display: none;
+    }
+
+    .menu-item {
+        justify-content: center;
+    }
+
+    .kpi-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-search {
+        width: 180px;
+    }
+}

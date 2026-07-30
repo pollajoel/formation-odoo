@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="training_management.appTile">
+        <div class="app-tile" t-on-click="props.onClick or (() => {})">
+            <div class="app-tile-icon">
+                <img t-if="props.iconUrl" t-att-src="props.iconUrl"/>
+                <i t-else="" class="fa fa-th-large"/>
+            </div>
+            <div class="app-tile-name" t-esc="props.name"/>
+        </div>
+    </t>
+</templates>

@@ -43,6 +43,7 @@
     'assets':{
         "web.assets_backend" : [
             "training_management/static/src/js/*.js",
+            "training_management/static/src/scss/dashboard.scss",
             "training_management/static/src/templates/*.xml"
         ]
     }
