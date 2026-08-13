@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--
+        On ne peut pas référencer un compte précis par son id externe :
+        le compte disponible dépend du plan comptable installé (localisation).
+        On recherche donc dynamiquement le premier compte de revenus existant.
+    -->
+    <record id="base.main_company" model="res.company">
+        <field name="training_income_account_id" search="[('account_type', '=', 'income')]"/>
+    </record>
+</odoo>

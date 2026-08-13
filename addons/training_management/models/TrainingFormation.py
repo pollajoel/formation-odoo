@@ -17,12 +17,16 @@ class TrainingFormation(models.Model):
     def create(self, vals_list):
         for vals in vals_list:
             if not vals.get("product_id"):
-                product = self.env["product.template"].create({
+                product_vals = {
                     "name": vals.get("name"),
                     "list_price": vals.get("price", 0.0),
                     "type": "service",
                     "invoice_policy": "order",
-                })
+                }
+                income_account = self.env.company.training_income_account_id
+                if income_account:
+                    product_vals["property_account_income_id"] = income_account.id
+                product = self.env["product.template"].create(product_vals)
                 vals["product_id"] = product.id
         return super().create(vals_list)
 

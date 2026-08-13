@@ -6,22 +6,29 @@ import { KpiCard } from "./KpiCard";
 import { AppTile } from "./AppTile";
 import { useService } from "@web/core/utils/hooks";
 import { user } from "@web/core/user";
+import { router } from "@web/core/browser/router";
+import { SessionKanban } from "./session/sessionKanban";
+import { SessionDetail } from "./session/details";
+import { RegistrationList } from "./registration/registrationList";
 
 export class TrainingManagementDashboard extends Component {
   static template = "training_management.dashboard";
   // recupérer les composants.
-  static components = { KpiCard, AppTile };
+  static components = { KpiCard, AppTile, SessionKanban, SessionDetail, RegistrationList };
   setup() {
     this.orm = useService("orm");
     this.action = useService("action");
     this.menu = useService("menu");
+    this.trainerService = useService("trainerService");
+    this.traineeService = useService("traineeService");
+    this.registrationService = useService("registrationService");
     this.apps = this.menu.getApps().map((app) => ({
       id: app.id,
       name: app.name,
       iconUrl: this.getAppIconUrl(app),
     }));
     this.state = useState({
-      currentPage: "dashboard",
+      currentPage: router.current.training_page || "dashboard",
       nbTrainees: 0,
       nbFormations: 0,
       nbTrainers: 0,
@@ -29,11 +36,13 @@ export class TrainingManagementDashboard extends Component {
       trainingMenuOpen: false,
       sessionMenuOpen: false,
       company: null,
+      selectedSession: ""
     });
 
     // Le cylde de vie d'un composant
     onWillStart(async () => {
       await this.loadData();
+      this.state.loading = false;
     });
 
     onMounted(() => {
@@ -47,7 +56,7 @@ export class TrainingManagementDashboard extends Component {
       await Promise.all([
         this.orm.read("res.company", [companyId], ["name", "logo"]),
         this.orm.call("training.trainee", "get_trainees_data", []),
-        this.orm.call("training.trainer", "get_trainers_data", []),
+        this.trainerService.getTrainersData(),
         this.orm.call("training.formation", "get_formation_data", []),
       ]);
 
@@ -70,23 +79,14 @@ export class TrainingManagementDashboard extends Component {
     });
   }
 
-  async openTrainers() {
-    await this.action.doAction({
-      type: "ir.actions.act_window",
-      name: "Formateurs",
-      res_model: "training.trainer",
-      views: [
-        [false, "list"],
-        [false, "form"],
-      ],
-    });
-  }
+
 
   async openTrainings() {
     await this.action.doAction({
       type: "ir.actions.act_window",
       name: "Formations",
       res_model: "training.formation",
+      target: "new",
       views: [
         [false, "list"],
         [false, "form"],
@@ -110,6 +110,16 @@ export class TrainingManagementDashboard extends Component {
 
   openPageChange(pageName) {
     this.state.currentPage = pageName;
+    this.state.selectedSession = "";
+    router.pushState({ training_page: pageName });
+  }
+
+  openSession(session) {
+    this.state.selectedSession = session;
+  }
+
+  closeSession() {
+    this.state.selectedSession = "";
   }
 
   toggleMenu(menu) {

@@ -17,7 +17,7 @@
                         type="object"
                         string="Envoyer la Facture"
                         class="btn-primary"
-                        invisible="state!= 'confirm'"
+                        invisible="state != 'waiting'"
                         />
                     <field name="state" widget="statusbar" statusbar_visible="draft,waiting,confirm,paid,done,cancel"/>
                 </header>
@@ -53,13 +53,14 @@
             <list>
                 <field name="formation_id" optional="show" readonly="state!='draft'"/>
                 <field name="trainee_id" optional="show" readonly="state!='draft'"/>
-                <field 
-                    name="state" 
+                <field
+                    name="state"
                     widget="badge"
                     decoration-info="state == 'draft'"
-                    decoration-warning="state =='confirmed'"
-                    decoration-success="state =='done'"
-                    decoration-danger="state =='cancel'"
+                    decoration-muted="state == 'waiting'"
+                    decoration-warning="state == 'confirm'"
+                    decoration-success="state in ('paid', 'done')"
+                    decoration-danger="state == 'cancel'"
                     optional="show"
                 />
             </list>

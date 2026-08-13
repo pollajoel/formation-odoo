@@ -76,6 +76,7 @@
         <field name="name">Accueil</field>
         <field name="tag">training_management.dashboard</field>
         <!-- <field name="target">current</field> -->
+         <!-- <field name="target">new</field> -->
          <field name="target">fullscreen</field>
      </record>
     <!-- Menus -->

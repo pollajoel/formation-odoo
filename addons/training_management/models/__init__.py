@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+from . import ir_http
 from . import Trainee
 from . import Trainer
+from . import res_company
 from . import TrainingFormation
 from . import TrainingSession
 from . import TrainingRegistration

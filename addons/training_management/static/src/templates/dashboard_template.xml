@@ -3,6 +3,12 @@
     <t t-name="training_management.dashboard">
         <div class="o_training_layout">
 
+            <t t-if="state.loading">
+                <div class="o_training_boot_overlay">
+                    <div class="o_training_boot_spinner"/>
+                </div>
+            </t>
+
             <!-- ======================================
                  SIDEBAR
                  ====================================== -->
@@ -35,7 +41,8 @@
                     </div>
                     <div class="submenu" t-att-class="state.trainingMenuOpen ? 'open' : ''">
                         <div class="submenu-item" t-on-click="() => () => {}"> Liste des formations </div>
-                        <div class="submenu-item" t-on-click="() => () => {}"> Nouvelle formation </div>
+                        <div class="submenu-item" t-on-click="() => this.trainerService.create()"> Nouvelle formation </div>
+                        <div class="submenu-item" t-on-click="() => this.traineeService.create()"> Nouveau participant </div>
                     </div>
                 </div>
 
@@ -49,8 +56,25 @@
                         <i class="fa fa-chevron-down submenu-arrow" t-att-class="state.sessionMenuOpen ? 'rotate' : ''"/>
                     </div>
                     <div class="submenu" t-att-class="state.sessionMenuOpen ? 'open' : ''">
-                        <div class="submenu-item">En cours</div>
-                        <div class="submenu-item">Terminées</div>
+                        <div class="submenu-item" t-att-class="state.currentPage === 'Brouillon' ? 'active' : ''" t-on-click="() => this.openPageChange('Brouillon')">
+                            <i class="fa fa-pencil"/> Brouillon
+                        </div>
+                        <div class="submenu-item" t-att-class="state.currentPage === 'En cours' ? 'active' : ''" t-on-click="() => this.openPageChange('En cours')">
+                            <i class="fa fa-check-circle"/> En cours
+                        </div>
+                        <div class="submenu-item" t-att-class="state.currentPage === 'Terminée' ? 'active' : ''" t-on-click="() => this.openPageChange('Terminée')">
+                            <i class="fa fa-flag-checkered"/> Terminées
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu des inscriptions -->
+                <div class="menu-section">
+                    <div class="menu-item" t-att-class="state.currentPage === 'Inscriptions' ? 'active' : ''" t-on-click="() => this.openPageChange('Inscriptions')">
+                        <div class="menu-left">
+                            <i class="fa fa-id-card"/>
+                            <span>Inscriptions</span>
+                        </div>
                     </div>
                 </div>
 
@@ -88,19 +112,19 @@
                 <t t-if="state.currentPage === 'dashboard'">
                 <!-- KPI -->
                 <div class="kpi-grid">
-                    <div class="kpi-card kpi-blue" onClick="() => this.openTrainees()">
+                    <div class="kpi-card kpi-blue" t-on-click="() => this.openTrainees()">
                         <div class="kpi-label">Apprenants</div>
                         <div class="kpi-value"><t t-esc="state.nbTrainees"/></div>
                     </div>
-                    <div class="kpi-card kpi-green"  onClick="() => this.openTrainers()" >
+                    <div class="kpi-card kpi-green" t-on-click="() => this.trainerService.openTrainers()">
                         <div class="kpi-label">Formateurs</div>
                         <div class="kpi-value"><t t-esc="state.nbTrainers"/></div>
                     </div>
-                    <div class="kpi-card kpi-red" onClick="() => this.openSessions()">
+                    <div class="kpi-card kpi-red" t-on-click="() => this.openSessions()">
                         <div class="kpi-label">Sessions actives</div>
                         <div class="kpi-value"><t t-esc="state.nbSessions"/></div>
                     </div>
-                    <div class="kpi-card kpi-purple" onClick="() => this.openTrainings()">
+                    <div class="kpi-card kpi-purple" t-on-click="() => this.openTrainings()">
                         <div class="kpi-label">Formations</div>
                         <div class="kpi-value"><t t-esc="state.nbFormations"/></div>
                     </div>
@@ -174,6 +198,42 @@
                       />
                 </div>
              </t>
+
+             <!-- Menu session  -->
+              <t t-if="state.currentPage ==='En cours'">
+                <t t-if="state.selectedSession">
+                    <SessionDetail sessionId="state.selectedSession.id" onBack="() => this.closeSession()"/>
+                </t>
+                <t t-else="">
+                    <SessionKanban openSession="(session) => this.openSession(session)" sessionState="'confirmed'"/>
+                </t>
+              </t>
+
+              <t t-if="state.currentPage ==='Terminée'">
+                <t t-if="state.selectedSession">
+                    <SessionDetail sessionId="state.selectedSession.id" onBack="() => this.closeSession()"/>
+                </t>
+                <t t-else="">
+                    <SessionKanban openSession="(session) => this.openSession(session)" sessionState="'done'"/>
+                </t>
+              </t>
+
+
+              
+              <t t-if="state.currentPage ==='Brouillon'">
+                <t t-if="state.selectedSession">
+                    <SessionDetail sessionId="state.selectedSession.id" onBack="() => this.closeSession()"/>
+                </t>
+                <t t-else="">
+                    <SessionKanban openSession="(session) => this.openSession(session)" sessionState="'draft'"/>
+                </t>
+              </t>
+
+              <!-- Menu session  -->
+
+              <t t-if="state.currentPage ==='Inscriptions'">
+                    <RegistrationList/>
+              </t>
 
 
             </main>

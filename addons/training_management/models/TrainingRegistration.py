@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import _, fields, models
+from odoo import _, fields, models, api
 from odoo.exceptions import UserError
 
 
@@ -77,6 +77,16 @@ class TrainingRegistration(models.Model):  # Correction de la coquille "Taining"
         # On renvoie l'action d'envoi de mail pour le dernier devis généré
         return sale_order.action_quotation_send()
 
+    @api.model
+    def _cron_process_paid_orders(self):
+        registrations = self.search([
+        ("state", "=", "confirm"),
+        ("sale_order_id.state", "=", "sale"),
+        ("sale_order_id.invoice_ids", "=", False),
+        ])
+        for registration in registrations:
+            registration.action_create_invoices()
+
     def action_create_invoices(self):
         self.ensure_one()
         if not self.sale_order_id:
@@ -86,15 +96,48 @@ class TrainingRegistration(models.Model):  # Correction de la coquille "Taining"
             raise UserError(_("Le devis doit être confirmé avant la facturation."))
             
         # Création de la facture
-        invoices = self.sale_order_id._create_invoices()
+        if self.sale_order_id.invoice_ids:
+            raise UserError(_("Une facture a déjà été créée pour cette inscription."))
+        else:
+            invoices = self.sale_order_id._create_invoices()
         
         # Optionnel : Mettre à l'état confirmé si on facture
-        self.state = "confirm"
-        
-        return {
-            "type": "ir.actions.act_window",
-            "name": _("Facture"),
-            "res_model": "account.move",
-            "view_mode": "form",
-            "res_id": invoices.id
-        }
+        if invoices:
+            # Validation comptable : sans ça la facture reste en brouillon,
+            # n'a pas de numéro définitif et Odoo ne génère pas de lien "Payer maintenant"
+            invoices.action_post()
+
+            # Si le paiement (ex: fait en ligne dès le devis) est déjà réconcilié
+            # avec la facture, ne pas régresser l'état vers "en attente de paiement"
+            if invoices.payment_state in ("paid", "in_payment"):
+                self.state = "paid"
+            else:
+                self.state = "confirm"
+
+            # Envoi automatique de la facture par mail
+            template = self.env.ref("account.email_template_edi_invoice")
+
+            if template:
+                # Le corps par défaut du template ne contient pas de bouton de paiement
+                # (uniquement le PDF joint) : on génère le mail sans l'envoyer tout de
+                # suite, on y ajoute un lien direct vers la page portail de la facture
+                # (où le paiement en ligne est disponible), puis on l'envoie nous-mêmes.
+                mail_id = template.send_mail(
+                    invoices.id,
+                    force_send=False,
+                    email_values={
+                        "email_to": self.trainee_id.partner_id.email,
+                    },
+                )
+                mail = self.env["mail.mail"].sudo().browse(mail_id)
+                portal_url = invoices.get_base_url() + invoices.get_portal_url()
+                mail.body_html = (mail.body_html or "") + (
+                    '<div style="margin-top:16px;">'
+                    '<a href="%s" '
+                    'style="background-color:#875A7B;padding:8px 16px;'
+                    'text-decoration:none;color:#fff;border-radius:5px;">'
+                    "Voir et payer la facture</a></div>" % portal_url
+                )
+                mail.send()
+
+        return True

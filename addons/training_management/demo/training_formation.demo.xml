@@ -6,6 +6,8 @@
         <field name="type">service</field>
         <field name="list_price">450</field>
         <field name="invoice_policy">order</field>
+        <!-- Compte requis pour pouvoir facturer ces formations démo -->
+        <field name="property_account_income_id" search="[('account_type', '=', 'income')]"/>
     </record>
 
     <record id="formation_python" model="training.formation">
@@ -23,6 +25,8 @@
         <field name="type">service</field>
         <field name="list_price">750</field>
         <field name="invoice_policy">order</field>
+        <!-- Compte requis pour pouvoir facturer ces formations démo -->
+        <field name="property_account_income_id" search="[('account_type', '=', 'income')]"/>
     </record>
 
     <record id="formation_odoo" model="training.formation">
@@ -40,6 +44,8 @@
         <field name="type">service</field>
         <field name="list_price">650</field>
         <field name="invoice_policy">order</field>
+        <!-- Compte requis pour pouvoir facturer ces formations démo -->
+        <field name="property_account_income_id" search="[('account_type', '=', 'income')]"/>
     </record>
 
     <record id="formation_java" model="training.formation">

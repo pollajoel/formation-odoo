@@ -90,8 +90,9 @@ class TrainingSession(models.Model):
             "type": "ir.actions.act_window",
             "name": "Feuille d'appel",
             "res_model": "training.attendance.sheet",
-            "view_mode": "form",
-            "res_id": sheet.id
+            "views": [[False, "form"]],
+            "res_id": sheet.id,
+            "target": "new"
         }
 
 

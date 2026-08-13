@@ -67,6 +67,28 @@ services:
       - "8025:8025"
       - "1025:1025"
 
+  n8n:
+    image: n8nio/n8n:latest
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_HOST=n8n
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - DB_TYPE=sqlite
+      - NODE_ENV=development
+      - GENERIC_TIMEZONE=Europe/Paris
+    volumes:
+      - ./n8n_data:/home/node/.n8n
+    networks:
+      - odoo
+    # demo@email.com
+    # DemoPassword123
+    # http://n8n:5678/webhook-test/36c130d2-a71f-4475-8141-fe43921cbc6b
+    # b0e0b1eaacebc3a3458b5cf82a8fc5957310e259
+    # cdd8ce44fff9bf11c6e77a1ea6bd9938bce9d315
+    # cec948766e70490a1eb64fc08cde8946c321dd47
+
 networks:
   odoo:
 

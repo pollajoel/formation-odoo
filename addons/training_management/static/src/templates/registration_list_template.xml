@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="training_management.RegistrationList">
+        <div class="session-grid">
+            <t t-if="!state.registrations.length">
+                <div class="training-table-empty">Aucune inscription</div>
+            </t>
+            <t t-foreach="state.registrations" t-as="registration" t-key="registration.id">
+                <div class="session-card session-card-clickable" t-on-click="() => this.openRegistration(registration.id)">
+                    <div class="session-card-header">
+                        <h4 class="session-card-title">
+                            <t t-out="registration.trainee_id and registration.trainee_id[1] or 'Apprenant inconnu'"/>
+                        </h4>
+                        <span class="session-badge" t-att-class="'session-badge-' + (registration.state or 'draft')">
+                            <t t-out="this.getStateLabel(registration.state)"/>
+                        </span>
+                    </div>
+
+                    <div class="session-card-meta">
+                        <div class="session-meta-row">
+                            <i class="fa fa-calendar-check-o"/>
+                            <span t-out="registration.session_id and registration.session_id[1] or '-'"/>
+                        </div>
+                        <div class="session-meta-row">
+                            <i class="fa fa-graduation-cap"/>
+                            <span t-out="registration.formation_id and registration.formation_id[1] or '-'"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>

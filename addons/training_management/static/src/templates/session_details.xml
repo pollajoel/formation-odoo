@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="training_management.SesionDetail">
+        <div class="session-detail">
+            <button class="btn-training-back" t-on-click="() => this.props.onBack &amp;&amp; this.props.onBack()">
+                <i class="fa fa-arrow-left"/> Retour
+            </button>
+            <div class="session-detail-header">
+                <div>
+                    <h2 class="session-detail-title" t-out="state.session.name"/>
+                    <div class="session-detail-meta">
+                        <span>
+                            <i class="fa fa-graduation-cap"/>
+                            <t t-out="state.session.formation_id and state.session.formation_id[1] or '-'"/>
+                        </span>
+                        <span>
+                            <i class="fa fa-calendar"/>
+                            <t t-out="state.session.start_date or '-'"/>
+                        </span>
+                    </div>
+                </div>
+                <div class="session-detail-actions">
+                    <button class="btn-training-outline" t-on-click="() => this.addTrainee()">
+                        <i class="fa fa-user-plus"/> Ajouter un participant
+                    </button>
+                    <button class="btn-training" t-on-click="() => this.traineeService.create()">
+                        <i class="fa fa-plus"/> Créer un participant
+                    </button>
+                    <Dropdown position="'bottom-end'">
+                        <button class="btn-training-outline">
+                            <i class="fa fa-ellipsis-v"/> Actions
+                        </button>
+                        <t t-set-slot="content">
+                            <DropdownItem onSelected="() => this.confirmSession()">
+                                <i class="fa fa-check-circle"/> Confirmer
+                            </DropdownItem>
+                            <DropdownItem onSelected="() => this.doneSession()">
+                                <i class="fa fa-flag-checkered"/> Marquer terminée
+                            </DropdownItem>
+                            <DropdownItem onSelected="() => this.cancelSession()">
+                                <i class="fa fa-times-circle"/> Annuler
+                            </DropdownItem>
+                            <DropdownItem onSelected="() => this.generateAttendanceSheet()">
+                                <i class="fa fa-file-text"/> Feuille d'appel
+                            </DropdownItem>
+                            <DropdownItem onSelected="() => this.sendAttendanceRequests()">
+                                <i class="fa fa-envelope"/> Envoyer les convocations
+                            </DropdownItem>
+                        </t>
+                    </Dropdown>
+                </div>
+            </div>
+
+            <div class="list-card">
+                <div class="chart-title">Participants</div>
+                <table class="training-table">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-if="!state.registration_ids.length">
+                            <tr>
+                                <td colspan="3" class="training-table-empty">Aucun participant inscrit</td>
+                            </tr>
+                        </t>
+                        <t t-foreach="state.registration_ids" t-as="trainee" t-key="trainee.id">
+                            <tr>
+                                <td><t t-out="trainee.name"/></td>
+                                <td><t t-out="trainee.email"/></td>
+                                <td class="text-end">
+                                    <button class="btn-training-danger" t-on-click="() => this.removeTrainee(trainee.id)">
+                                        Retirer
+                                    </button>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </t>
+</templates>
