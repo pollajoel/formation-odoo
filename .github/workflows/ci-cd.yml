@@ -24,8 +24,8 @@ jobs:
                  pylint-odoo
             - name: Run linters
               run: |
-                 black --check ./addons/training_management
-                 isort --check-only .
-                 pylint --disable=C0111,C0103 .
+                 black --check ../../addons/training_management
+                 isort --check-only ../../addons/training_management
+                 pylint --disable=C0111,C0103 ../../addons/training_management
             - name: Run Odoo-specific linter
-              run: pylint-odoo --disable=C0111,C0103 .
+              run: pylint-odoo --disable=C0111,C0103 ../../addons/training_management
