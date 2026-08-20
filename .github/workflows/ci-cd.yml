@@ -22,3 +22,10 @@ jobs:
                  isort \
                  pylint \
                  pylint-odoo
+            - name: Run linters
+              run: |
+                 black --check .
+                 isort --check-only .
+                 pylint --disable=C0111,C0103 .
+            - name: Run Odoo-specific linter
+              run: pylint-odoo --disable=C0111,C0103 .
