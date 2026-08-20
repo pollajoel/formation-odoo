@@ -61,3 +61,8 @@ Docker Compose va automatiquement :
 - 💾 Monter les volumes persistants pour les données
 
 odoo shell -d master
+
+
+
+Lancer les tests:
+odoo -u training_management  --test-enable --stop-after-init --test-tags /training_management  --http-port 8070
